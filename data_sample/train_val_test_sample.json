@@ -1,0 +1,17 @@
+{
+    "train": [
+        "data/dataset\\ore_1200\\187-x1256-y319-w91-h79",
+        "data/dataset\\ore_1200\\187-x1400-y440-w88-h86"
+
+    ],
+    "val": [
+        "data/dataset\\ore_1200\\187-x1256-y319-w91-h79",
+        "data/dataset\\ore_1200\\187-x1400-y440-w88-h86"
+        
+    ],
+    "test": [
+        "data/dataset\\ore_1200\\187-x1256-y319-w91-h79",
+        "data/dataset\\ore_1200\\187-x1400-y440-w88-h86"
+        
+    ]
+}

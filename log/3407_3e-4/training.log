@@ -1,0 +1,1904 @@
+2025-07-23 18:38:17,572 - root - INFO - Namespace(base_lr=0.00030000000000000003, batch_size=64, freeze_layers=False, gpu_id=[2, 3], in_dim=1, include_top=False, init_lr=3.0000000000000004e-05, json_path='/root/userfolder/ore/data/SAMdataset/train_val_test.json', min_lr=3e-06, modelName='dual_tower', num_classes=2, num_epochs=200, num_warmup=5, num_workers=4, pretrained=None, savePath='/root/userfolder/ore/ore_classification/work_dirs', seed=3407, warmup_strategy='cos')
+2025-07-23 18:38:17,572 - root - INFO - Using 8 GPUs: [2, 3]
+2025-07-23 18:38:17,572 - root - INFO - Model Summary:
+2025-07-23 18:38:17,572 - root - INFO - DataParallel(
+  (module): dual_tower(
+    (model_low): MineralClassifier(
+      (conv1): Conv2d(1, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (res_block1): ResidualBlock(
+        (project): Sequential(
+          (0): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (conv1): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (res_block2): ResidualBlock(
+        (project): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (attention): MultiScaleAttention(
+        (ca): ChannelAttention(
+          (avg_pool): AdaptiveAvgPool2d(output_size=1)
+          (max_pool): AdaptiveMaxPool2d(output_size=1)
+          (fc1): Conv2d(128, 8, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (relu1): ReLU()
+          (fc2): Conv2d(8, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (sigmoid): Sigmoid()
+        )
+        (sa): SpatialAttention(
+          (conv1): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+          (sigmoid): Sigmoid()
+        )
+      )
+      (avgpool): AdaptiveAvgPool2d(output_size=1)
+      (fc): Linear(in_features=128, out_features=2, bias=True)
+    )
+    (model_high): MineralClassifier(
+      (conv1): Conv2d(1, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (res_block1): ResidualBlock(
+        (project): Sequential(
+          (0): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (conv1): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (res_block2): ResidualBlock(
+        (project): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (attention): MultiScaleAttention(
+        (ca): ChannelAttention(
+          (avg_pool): AdaptiveAvgPool2d(output_size=1)
+          (max_pool): AdaptiveMaxPool2d(output_size=1)
+          (fc1): Conv2d(128, 8, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (relu1): ReLU()
+          (fc2): Conv2d(8, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (sigmoid): Sigmoid()
+        )
+        (sa): SpatialAttention(
+          (conv1): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+          (sigmoid): Sigmoid()
+        )
+      )
+      (avgpool): AdaptiveAvgPool2d(output_size=1)
+      (fc): Linear(in_features=128, out_features=2, bias=True)
+    )
+    (classifier): ChebyKAN(
+      (act_fun): ModuleList(
+        (0): ChebyKANLayer()
+        (1): ChebyKANLayer()
+        (2): ChebyKANLayer()
+        (3): ChebyKANLayer()
+        (4): ChebyKANLayer()
+        (5): ChebyKANLayer()
+      )
+    )
+  )
+)
+2025-07-23 18:38:17,573 - root - INFO - ----------------------------------------------------------------------------------------------------
+Epoch 0:
+ -----Train Loss: 0.677043
+ Accuracy: 0.584388,  Precision: 0.616311,  Recall: 0.865966,  F1: 0.720114,  AUC: 0.501356,  PR_AUC: 0.619571,  PR_AUC0: 0.619520
+matrix:[[ 1081  7236]
+ [ 1799 11623]]
+-----Val Loss: 0.666582
+ Accuracy: 0.617432,  Precision: 0.617432,  Recall: 1.000000,  F1: 0.763472,  AUC: 0.484883,  PR_AUC: 0.604228,  PR_AUC0: 0.603043
+matrix:[[   0 1782]
+ [   0 2876]]
+Epoch 1:
+ -----Train Loss: 0.651377
+ Accuracy: 0.642946,  Precision: 0.642268,  Recall: 0.951870,  F1: 0.767005,  AUC: 0.585857,  PR_AUC: 0.673261,  PR_AUC0: 0.673197
+matrix:[[ 1201  7116]
+ [  646 12776]]
+-----Val Loss: 0.604424
+ Accuracy: 0.706097,  Precision: 0.779385,  Recall: 0.730876,  F1: 0.754351,  AUC: 0.727332,  PR_AUC: 0.778352,  PR_AUC0: 0.778220
+matrix:[[1187  595]
+ [ 774 2102]]
+Epoch 2:
+ -----Train Loss: 0.634737
+ Accuracy: 0.658172,  Precision: 0.657401,  Recall: 0.932126,  F1: 0.771023,  AUC: 0.632890,  PR_AUC: 0.716457,  PR_AUC0: 0.716385
+matrix:[[ 1797  6520]
+ [  911 12511]]
+-----Val Loss: 0.664070
+ Accuracy: 0.638257,  Precision: 0.632011,  Recall: 0.991307,  F1: 0.771897,  AUC: 0.662344,  PR_AUC: 0.691418,  PR_AUC0: 0.691012
+matrix:[[ 122 1660]
+ [  25 2851]]
+Epoch 3:
+ -----Train Loss: 0.615395
+ Accuracy: 0.675514,  Precision: 0.669850,  Recall: 0.935554,  F1: 0.780714,  AUC: 0.665791,  PR_AUC: 0.741523,  PR_AUC0: 0.741486
+matrix:[[ 2128  6189]
+ [  865 12557]]
+-----Val Loss: 0.537624
+ Accuracy: 0.742164,  Precision: 0.728763,  Recall: 0.927677,  F1: 0.816277,  AUC: 0.785541,  PR_AUC: 0.793159,  PR_AUC0: 0.792780
+matrix:[[ 789  993]
+ [ 208 2668]]
+Epoch 4:
+ -----Train Loss: 0.618272
+ Accuracy: 0.674364,  Precision: 0.669210,  Recall: 0.934511,  F1: 0.779916,  AUC: 0.655771,  PR_AUC: 0.736967,  PR_AUC0: 0.736927
+matrix:[[ 2117  6200]
+ [  879 12543]]
+-----Val Loss: 0.525028
+ Accuracy: 0.775655,  Precision: 0.808561,  Recall: 0.834145,  F1: 0.821154,  AUC: 0.797512,  PR_AUC: 0.823160,  PR_AUC0: 0.823017
+matrix:[[1214  568]
+ [ 477 2399]]
+Epoch 5:
+ -----Train Loss: 0.609543
+ Accuracy: 0.678734,  Precision: 0.676693,  Recall: 0.918492,  F1: 0.779267,  AUC: 0.674689,  PR_AUC: 0.753387,  PR_AUC0: 0.753305
+matrix:[[ 2427  5890]
+ [ 1094 12328]]
+-----Val Loss: 0.544361
+ Accuracy: 0.741520,  Precision: 0.735759,  Recall: 0.907163,  F1: 0.812519,  AUC: 0.782258,  PR_AUC: 0.814601,  PR_AUC0: 0.814492
+matrix:[[ 845  937]
+ [ 267 2609]]
+Epoch 6:
+ -----Train Loss: 0.601781
+ Accuracy: 0.686324,  Precision: 0.681991,  Recall: 0.921770,  F1: 0.783956,  AUC: 0.683222,  PR_AUC: 0.758136,  PR_AUC0: 0.758094
+matrix:[[ 2548  5769]
+ [ 1050 12372]]
+-----Val Loss: 0.523007
+ Accuracy: 0.764491,  Precision: 0.806196,  Recall: 0.814325,  F1: 0.810240,  AUC: 0.798624,  PR_AUC: 0.825350,  PR_AUC0: 0.825036
+matrix:[[1219  563]
+ [ 534 2342]]
+Epoch 7:
+ -----Train Loss: 0.596262
+ Accuracy: 0.689130,  Precision: 0.685338,  Recall: 0.917970,  F1: 0.784777,  AUC: 0.693537,  PR_AUC: 0.766773,  PR_AUC0: 0.766713
+matrix:[[ 2660  5657]
+ [ 1101 12321]]
+-----Val Loss: 0.484320
+ Accuracy: 0.802276,  Precision: 0.820597,  Recall: 0.869958,  F1: 0.844557,  AUC: 0.825685,  PR_AUC: 0.849033,  PR_AUC0: 0.848941
+matrix:[[1235  547]
+ [ 374 2502]]
+Epoch 8:
+ -----Train Loss: 0.595592
+ Accuracy: 0.687336,  Precision: 0.684140,  Recall: 0.916927,  F1: 0.783611,  AUC: 0.693502,  PR_AUC: 0.767861,  PR_AUC0: 0.767820
+matrix:[[ 2635  5682]
+ [ 1115 12307]]
+-----Val Loss: 0.503239
+ Accuracy: 0.807213,  Precision: 0.847505,  Recall: 0.838665,  F1: 0.843062,  AUC: 0.822149,  PR_AUC: 0.848023,  PR_AUC0: 0.847871
+matrix:[[1348  434]
+ [ 464 2412]]
+Epoch 9:
+ -----Train Loss: 0.583945
+ Accuracy: 0.697594,  Precision: 0.692208,  Recall: 0.918716,  F1: 0.789538,  AUC: 0.710568,  PR_AUC: 0.779461,  PR_AUC0: 0.779403
+matrix:[[ 2834  5483]
+ [ 1091 12331]]
+-----Val Loss: 0.481487
+ Accuracy: 0.800988,  Precision: 0.857615,  Recall: 0.812587,  F1: 0.834494,  AUC: 0.822261,  PR_AUC: 0.842068,  PR_AUC0: 0.841775
+matrix:[[1394  388]
+ [ 539 2337]]
+Epoch 10:
+ -----Train Loss: 0.581014
+ Accuracy: 0.702102,  Precision: 0.697173,  Recall: 0.914916,  F1: 0.791339,  AUC: 0.713289,  PR_AUC: 0.778894,  PR_AUC0: 0.778845
+matrix:[[ 2983  5334]
+ [ 1142 12280]]
+-----Val Loss: 0.520809
+ Accuracy: 0.760627,  Precision: 0.745333,  Recall: 0.930111,  F1: 0.827533,  AUC: 0.826684,  PR_AUC: 0.847258,  PR_AUC0: 0.846993
+matrix:[[ 868  914]
+ [ 201 2675]]
+Epoch 11:
+ -----Train Loss: 0.587713
+ Accuracy: 0.697502,  Precision: 0.690040,  Recall: 0.926017,  F1: 0.790800,  AUC: 0.707490,  PR_AUC: 0.776709,  PR_AUC0: 0.776675
+matrix:[[ 2734  5583]
+ [  993 12429]]
+-----Val Loss: 0.473138
+ Accuracy: 0.810219,  Precision: 0.846555,  Recall: 0.845967,  F1: 0.846261,  AUC: 0.827081,  PR_AUC: 0.850991,  PR_AUC0: 0.850848
+matrix:[[1341  441]
+ [ 443 2433]]
+Epoch 12:
+ -----Train Loss: 0.584535
+ Accuracy: 0.698422,  Precision: 0.690257,  Recall: 0.927954,  F1: 0.791648,  AUC: 0.711218,  PR_AUC: 0.777171,  PR_AUC0: 0.777107
+matrix:[[ 2728  5589]
+ [  967 12455]]
+-----Val Loss: 0.485177
+ Accuracy: 0.805711,  Precision: 0.836004,  Recall: 0.852573,  F1: 0.844207,  AUC: 0.825506,  PR_AUC: 0.845096,  PR_AUC0: 0.844896
+matrix:[[1301  481]
+ [ 424 2452]]
+Epoch 13:
+ -----Train Loss: 0.581471
+ Accuracy: 0.700814,  Precision: 0.696422,  Recall: 0.913724,  F1: 0.790410,  AUC: 0.714254,  PR_AUC: 0.783720,  PR_AUC0: 0.783684
+matrix:[[ 2971  5346]
+ [ 1158 12264]]
+-----Val Loss: 0.487178
+ Accuracy: 0.793044,  Precision: 0.856450,  Recall: 0.798679,  F1: 0.826556,  AUC: 0.827289,  PR_AUC: 0.852492,  PR_AUC0: 0.852391
+matrix:[[1397  385]
+ [ 579 2297]]
+Epoch 14:
+ -----Train Loss: 0.579454
+ Accuracy: 0.702470,  Precision: 0.699232,  Recall: 0.909179,  F1: 0.790503,  AUC: 0.717999,  PR_AUC: 0.784012,  PR_AUC0: 0.783967
+matrix:[[ 3068  5249]
+ [ 1219 12203]]
+-----Val Loss: 0.564367
+ Accuracy: 0.708244,  Precision: 0.853943,  Recall: 0.636300,  F1: 0.729229,  AUC: 0.786782,  PR_AUC: 0.823856,  PR_AUC0: 0.823709
+matrix:[[1469  313]
+ [1046 1830]]
+Epoch 15:
+ -----Train Loss: 0.600118
+ Accuracy: 0.684300,  Precision: 0.679571,  Recall: 0.924676,  F1: 0.783399,  AUC: 0.690608,  PR_AUC: 0.765158,  PR_AUC0: 0.765081
+matrix:[[ 2465  5852]
+ [ 1011 12411]]
+-----Val Loss: 0.619443
+ Accuracy: 0.659511,  Precision: 0.649791,  Recall: 0.972879,  F1: 0.779170,  AUC: 0.728658,  PR_AUC: 0.781918,  PR_AUC0: 0.781699
+matrix:[[ 274 1508]
+ [  78 2798]]
+Epoch 16:
+ -----Train Loss: 0.614393
+ Accuracy: 0.670500,  Precision: 0.671621,  Recall: 0.912457,  F1: 0.773731,  AUC: 0.672136,  PR_AUC: 0.755551,  PR_AUC0: 0.755518
+matrix:[[ 2329  5988]
+ [ 1175 12247]]
+-----Val Loss: 0.560697
+ Accuracy: 0.739158,  Precision: 0.750982,  Recall: 0.864047,  F1: 0.803557,  AUC: 0.766924,  PR_AUC: 0.808999,  PR_AUC0: 0.808856
+matrix:[[ 958  824]
+ [ 391 2485]]
+Epoch 17:
+ -----Train Loss: 0.596607
+ Accuracy: 0.686416,  Precision: 0.682792,  Recall: 0.919088,  F1: 0.783512,  AUC: 0.697199,  PR_AUC: 0.773103,  PR_AUC0: 0.773057
+matrix:[[ 2586  5731]
+ [ 1086 12336]]
+-----Val Loss: 0.474344
+ Accuracy: 0.803993,  Precision: 0.833957,  Recall: 0.852225,  F1: 0.842992,  AUC: 0.833239,  PR_AUC: 0.854409,  PR_AUC0: 0.854221
+matrix:[[1294  488]
+ [ 425 2451]]
+Epoch 18:
+ -----Train Loss: 0.581579
+ Accuracy: 0.698882,  Precision: 0.693625,  Recall: 0.917598,  F1: 0.790044,  AUC: 0.714978,  PR_AUC: 0.781773,  PR_AUC0: 0.781726
+matrix:[[ 2877  5440]
+ [ 1106 12316]]
+-----Val Loss: 0.467655
+ Accuracy: 0.809146,  Precision: 0.847256,  Recall: 0.842837,  F1: 0.845041,  AUC: 0.822628,  PR_AUC: 0.843013,  PR_AUC0: 0.842859
+matrix:[[1345  437]
+ [ 452 2424]]
+Epoch 19:
+ -----Train Loss: 0.583760
+ Accuracy: 0.698790,  Precision: 0.694269,  Recall: 0.915139,  F1: 0.789548,  AUC: 0.711003,  PR_AUC: 0.781593,  PR_AUC0: 0.781564
+matrix:[[ 2908  5409]
+ [ 1139 12283]]
+-----Val Loss: 0.519676
+ Accuracy: 0.778231,  Precision: 0.823902,  Recall: 0.815021,  F1: 0.819437,  AUC: 0.809699,  PR_AUC: 0.838589,  PR_AUC0: 0.838462
+matrix:[[1281  501]
+ [ 532 2344]]
+Epoch 20:
+ -----Train Loss: 0.587679
+ Accuracy: 0.699342,  Precision: 0.695470,  Recall: 0.912681,  F1: 0.789406,  AUC: 0.708773,  PR_AUC: 0.780914,  PR_AUC0: 0.780878
+matrix:[[ 2953  5364]
+ [ 1172 12250]]
+-----Val Loss: 0.504933
+ Accuracy: 0.774581,  Precision: 0.849006,  Recall: 0.772253,  F1: 0.808813,  AUC: 0.810876,  PR_AUC: 0.838489,  PR_AUC0: 0.838346
+matrix:[[1387  395]
+ [ 655 2221]]
+Epoch 21:
+ -----Train Loss: 0.588006
+ Accuracy: 0.696030,  Precision: 0.694797,  Recall: 0.905379,  F1: 0.786232,  AUC: 0.709482,  PR_AUC: 0.779543,  PR_AUC0: 0.779512
+matrix:[[ 2979  5338]
+ [ 1270 12152]]
+-----Val Loss: 0.485318
+ Accuracy: 0.800988,  Precision: 0.826466,  Recall: 0.857789,  F1: 0.841836,  AUC: 0.819693,  PR_AUC: 0.842308,  PR_AUC0: 0.842099
+matrix:[[1264  518]
+ [ 409 2467]]
+Epoch 22:
+ -----Train Loss: 0.581184
+ Accuracy: 0.703712,  Precision: 0.697728,  Recall: 0.917672,  F1: 0.792727,  AUC: 0.716889,  PR_AUC: 0.783500,  PR_AUC0: 0.783456
+matrix:[[ 2981  5336]
+ [ 1105 12317]]
+-----Val Loss: 0.466380
+ Accuracy: 0.811722,  Precision: 0.836645,  Recall: 0.863700,  F1: 0.849957,  AUC: 0.829594,  PR_AUC: 0.850697,  PR_AUC0: 0.850398
+matrix:[[1297  485]
+ [ 392 2484]]
+Epoch 23:
+ -----Train Loss: 0.579925
+ Accuracy: 0.700906,  Precision: 0.693016,  Recall: 0.925570,  F1: 0.792586,  AUC: 0.719158,  PR_AUC: 0.784303,  PR_AUC0: 0.784257
+matrix:[[ 2814  5503]
+ [  999 12423]]
+-----Val Loss: 0.461429
+ Accuracy: 0.806999,  Precision: 0.838412,  Recall: 0.851530,  F1: 0.844920,  AUC: 0.840111,  PR_AUC: 0.865860,  PR_AUC0: 0.865753
+matrix:[[1310  472]
+ [ 427 2449]]
+Epoch 24:
+ -----Train Loss: 0.579118
+ Accuracy: 0.701780,  Precision: 0.696183,  Recall: 0.917300,  F1: 0.791590,  AUC: 0.718720,  PR_AUC: 0.786426,  PR_AUC0: 0.786357
+matrix:[[ 2944  5373]
+ [ 1110 12312]]
+-----Val Loss: 0.482881
+ Accuracy: 0.794762,  Precision: 0.811082,  Recall: 0.870306,  F1: 0.839651,  AUC: 0.822998,  PR_AUC: 0.845380,  PR_AUC0: 0.845244
+matrix:[[1199  583]
+ [ 373 2503]]
+Epoch 25:
+ -----Train Loss: 0.583781
+ Accuracy: 0.699848,  Precision: 0.696350,  Recall: 0.911191,  F1: 0.789414,  AUC: 0.712995,  PR_AUC: 0.782350,  PR_AUC0: 0.782295
+matrix:[[ 2984  5333]
+ [ 1192 12230]]
+-----Val Loss: 0.497662
+ Accuracy: 0.772435,  Precision: 0.765342,  Recall: 0.910640,  F1: 0.831693,  AUC: 0.818434,  PR_AUC: 0.833934,  PR_AUC0: 0.833834
+matrix:[[ 979  803]
+ [ 257 2619]]
+Epoch 26:
+ -----Train Loss: 0.575293
+ Accuracy: 0.703620,  Precision: 0.697247,  Recall: 0.919014,  F1: 0.792916,  AUC: 0.723815,  PR_AUC: 0.790799,  PR_AUC0: 0.790723
+matrix:[[ 2961  5356]
+ [ 1087 12335]]
+-----Val Loss: 0.464412
+ Accuracy: 0.810219,  Precision: 0.843448,  Recall: 0.850487,  F1: 0.846953,  AUC: 0.829756,  PR_AUC: 0.854334,  PR_AUC0: 0.854248
+matrix:[[1328  454]
+ [ 430 2446]]
+Epoch 27:
+ -----Train Loss: 0.581132
+ Accuracy: 0.699526,  Precision: 0.695494,  Recall: 0.913128,  F1: 0.789589,  AUC: 0.715573,  PR_AUC: 0.785362,  PR_AUC0: 0.785319
+matrix:[[ 2951  5366]
+ [ 1166 12256]]
+-----Val Loss: 0.476545
+ Accuracy: 0.809146,  Precision: 0.834624,  Recall: 0.861613,  F1: 0.847904,  AUC: 0.819435,  PR_AUC: 0.837450,  PR_AUC0: 0.837271
+matrix:[[1291  491]
+ [ 398 2478]]
+Epoch 28:
+ -----Train Loss: 0.577532
+ Accuracy: 0.705046,  Precision: 0.698359,  Recall: 0.919386,  F1: 0.793773,  AUC: 0.720904,  PR_AUC: 0.785882,  PR_AUC0: 0.785837
+matrix:[[ 2987  5330]
+ [ 1082 12340]]
+-----Val Loss: 0.464258
+ Accuracy: 0.812151,  Precision: 0.834727,  Recall: 0.867524,  F1: 0.850810,  AUC: 0.833185,  PR_AUC: 0.853590,  PR_AUC0: 0.853494
+matrix:[[1288  494]
+ [ 381 2495]]
+Epoch 29:
+ -----Train Loss: 0.573202
+ Accuracy: 0.709370,  Precision: 0.701704,  Recall: 0.920653,  F1: 0.796404,  AUC: 0.726046,  PR_AUC: 0.787317,  PR_AUC0: 0.787273
+matrix:[[ 3064  5253]
+ [ 1065 12357]]
+-----Val Loss: 0.463040
+ Accuracy: 0.815157,  Precision: 0.858924,  Recall: 0.838317,  F1: 0.848496,  AUC: 0.837423,  PR_AUC: 0.862574,  PR_AUC0: 0.862504
+matrix:[[1386  396]
+ [ 465 2411]]
+Epoch 30:
+ -----Train Loss: 0.573892
+ Accuracy: 0.705874,  Precision: 0.699478,  Recall: 0.918045,  F1: 0.793994,  AUC: 0.725062,  PR_AUC: 0.790686,  PR_AUC0: 0.790647
+matrix:[[ 3023  5294]
+ [ 1100 12322]]
+-----Val Loss: 0.477836
+ Accuracy: 0.796479,  Precision: 0.868220,  Recall: 0.790334,  F1: 0.827448,  AUC: 0.825070,  PR_AUC: 0.847554,  PR_AUC0: 0.847450
+matrix:[[1437  345]
+ [ 603 2273]]
+Epoch 31:
+ -----Train Loss: 0.577787
+ Accuracy: 0.702562,  Precision: 0.697659,  Recall: 0.914618,  F1: 0.791540,  AUC: 0.717954,  PR_AUC: 0.786941,  PR_AUC0: 0.786901
+matrix:[[ 2997  5320]
+ [ 1146 12276]]
+-----Val Loss: 0.558161
+ Accuracy: 0.755260,  Precision: 0.748711,  Recall: 0.908554,  F1: 0.820924,  AUC: 0.821230,  PR_AUC: 0.850608,  PR_AUC0: 0.850526
+matrix:[[ 905  877]
+ [ 263 2613]]
+Epoch 32:
+ -----Train Loss: 0.577690
+ Accuracy: 0.701734,  Precision: 0.698093,  Recall: 0.910818,  F1: 0.790392,  AUC: 0.718654,  PR_AUC: 0.788701,  PR_AUC0: 0.788663
+matrix:[[ 3030  5287]
+ [ 1197 12225]]
+-----Val Loss: 0.520146
+ Accuracy: 0.752898,  Precision: 0.865002,  Recall: 0.710709,  F1: 0.780302,  AUC: 0.820166,  PR_AUC: 0.848298,  PR_AUC0: 0.848190
+matrix:[[1463  319]
+ [ 832 2044]]
+Epoch 33:
+ -----Train Loss: 0.575270
+ Accuracy: 0.708450,  Precision: 0.704079,  Recall: 0.910446,  F1: 0.794074,  AUC: 0.722465,  PR_AUC: 0.789229,  PR_AUC0: 0.789201
+matrix:[[ 3181  5136]
+ [ 1202 12220]]
+-----Val Loss: 0.475784
+ Accuracy: 0.805281,  Precision: 0.844351,  Recall: 0.839360,  F1: 0.841848,  AUC: 0.826198,  PR_AUC: 0.849286,  PR_AUC0: 0.849177
+matrix:[[1337  445]
+ [ 462 2414]]
+Epoch 34:
+ -----Train Loss: 0.576474
+ Accuracy: 0.704816,  Precision: 0.698431,  Recall: 0.918492,  F1: 0.793486,  AUC: 0.721988,  PR_AUC: 0.792587,  PR_AUC0: 0.792553
+matrix:[[ 2994  5323]
+ [ 1094 12328]]
+-----Val Loss: 0.459527
+ Accuracy: 0.812795,  Precision: 0.860432,  Recall: 0.831711,  F1: 0.845827,  AUC: 0.834831,  PR_AUC: 0.852953,  PR_AUC0: 0.852746
+matrix:[[1394  388]
+ [ 484 2392]]
+Epoch 35:
+ -----Train Loss: 0.578781
+ Accuracy: 0.704310,  Precision: 0.700195,  Recall: 0.911265,  F1: 0.791907,  AUC: 0.719788,  PR_AUC: 0.789185,  PR_AUC0: 0.789149
+matrix:[[ 3080  5237]
+ [ 1191 12231]]
+-----Val Loss: 0.463807
+ Accuracy: 0.815157,  Precision: 0.849220,  Recall: 0.851878,  F1: 0.850547,  AUC: 0.835481,  PR_AUC: 0.852470,  PR_AUC0: 0.852359
+matrix:[[1347  435]
+ [ 426 2450]]
+Epoch 36:
+ -----Train Loss: 0.577182
+ Accuracy: 0.707668,  Precision: 0.699893,  Recall: 0.921770,  F1: 0.795653,  AUC: 0.720289,  PR_AUC: 0.784924,  PR_AUC0: 0.784885
+matrix:[[ 3012  5305]
+ [ 1050 12372]]
+-----Val Loss: 0.460687
+ Accuracy: 0.814513,  Precision: 0.836680,  Recall: 0.869263,  F1: 0.852660,  AUC: 0.838793,  PR_AUC: 0.861085,  PR_AUC0: 0.860988
+matrix:[[1294  488]
+ [ 376 2500]]
+Epoch 37:
+ -----Train Loss: 0.578700
+ Accuracy: 0.703436,  Precision: 0.695696,  Recall: 0.923707,  F1: 0.793650,  AUC: 0.717544,  PR_AUC: 0.786897,  PR_AUC0: 0.786860
+matrix:[[ 2894  5423]
+ [ 1024 12398]]
+-----Val Loss: 0.460743
+ Accuracy: 0.817518,  Precision: 0.849793,  Recall: 0.855702,  F1: 0.852737,  AUC: 0.835980,  PR_AUC: 0.855281,  PR_AUC0: 0.855114
+matrix:[[1347  435]
+ [ 415 2461]]
+Epoch 38:
+ -----Train Loss: 0.571381
+ Accuracy: 0.711348,  Precision: 0.703560,  Recall: 0.920206,  F1: 0.797430,  AUC: 0.727422,  PR_AUC: 0.791906,  PR_AUC0: 0.791853
+matrix:[[ 3113  5204]
+ [ 1071 12351]]
+-----Val Loss: 0.451126
+ Accuracy: 0.823529,  Precision: 0.851712,  Recall: 0.864743,  F1: 0.858178,  AUC: 0.837160,  PR_AUC: 0.855011,  PR_AUC0: 0.854906
+matrix:[[1349  433]
+ [ 389 2487]]
+Epoch 39:
+ -----Train Loss: 0.570773
+ Accuracy: 0.711348,  Precision: 0.703491,  Recall: 0.920429,  F1: 0.797470,  AUC: 0.729195,  PR_AUC: 0.792276,  PR_AUC0: 0.792214
+matrix:[[ 3110  5207]
+ [ 1068 12354]]
+-----Val Loss: 0.456191
+ Accuracy: 0.819236,  Precision: 0.847573,  Recall: 0.862309,  F1: 0.854878,  AUC: 0.834651,  PR_AUC: 0.855176,  PR_AUC0: 0.855039
+matrix:[[1336  446]
+ [ 396 2480]]
+Epoch 40:
+ -----Train Loss: 0.570787
+ Accuracy: 0.708220,  Precision: 0.700618,  Recall: 0.920951,  F1: 0.795815,  AUC: 0.728206,  PR_AUC: 0.793671,  PR_AUC0: 0.793637
+matrix:[[ 3035  5282]
+ [ 1061 12361]]
+-----Val Loss: 0.451901
+ Accuracy: 0.816874,  Precision: 0.832621,  Recall: 0.880389,  F1: 0.855839,  AUC: 0.836590,  PR_AUC: 0.855371,  PR_AUC0: 0.855267
+matrix:[[1273  509]
+ [ 344 2532]]
+Epoch 41:
+ -----Train Loss: 0.572426
+ Accuracy: 0.708956,  Precision: 0.702240,  Recall: 0.917747,  F1: 0.795659,  AUC: 0.726622,  PR_AUC: 0.790544,  PR_AUC0: 0.790471
+matrix:[[ 3094  5223]
+ [ 1104 12318]]
+-----Val Loss: 0.481256
+ Accuracy: 0.798626,  Precision: 0.796875,  Recall: 0.904381,  F1: 0.847231,  AUC: 0.832137,  PR_AUC: 0.853159,  PR_AUC0: 0.853065
+matrix:[[1119  663]
+ [ 275 2601]]
+Epoch 42:
+ -----Train Loss: 0.572453
+ Accuracy: 0.705138,  Precision: 0.701749,  Recall: 0.908583,  F1: 0.791883,  AUC: 0.727050,  PR_AUC: 0.797118,  PR_AUC0: 0.797086
+matrix:[[ 3134  5183]
+ [ 1227 12195]]
+-----Val Loss: 0.467448
+ Accuracy: 0.808072,  Precision: 0.839849,  Recall: 0.851530,  F1: 0.845649,  AUC: 0.820635,  PR_AUC: 0.844745,  PR_AUC0: 0.844592
+matrix:[[1315  467]
+ [ 427 2449]]
+Epoch 43:
+ -----Train Loss: 0.573582
+ Accuracy: 0.706794,  Precision: 0.698804,  Recall: 0.922888,  F1: 0.795364,  AUC: 0.723366,  PR_AUC: 0.790393,  PR_AUC0: 0.790352
+matrix:[[ 2978  5339]
+ [ 1035 12387]]
+-----Val Loss: 0.454595
+ Accuracy: 0.817089,  Precision: 0.843051,  Recall: 0.864743,  F1: 0.853759,  AUC: 0.835602,  PR_AUC: 0.852721,  PR_AUC0: 0.852618
+matrix:[[1319  463]
+ [ 389 2487]]
+Epoch 44:
+ -----Train Loss: 0.577353
+ Accuracy: 0.702470,  Precision: 0.695887,  Recall: 0.920280,  F1: 0.792506,  AUC: 0.720752,  PR_AUC: 0.788868,  PR_AUC0: 0.788802
+matrix:[[ 2919  5398]
+ [ 1070 12352]]
+-----Val Loss: 0.457514
+ Accuracy: 0.822241,  Precision: 0.860310,  Recall: 0.850139,  F1: 0.855194,  AUC: 0.827043,  PR_AUC: 0.845586,  PR_AUC0: 0.845444
+matrix:[[1385  397]
+ [ 431 2445]]
+Epoch 45:
+ -----Train Loss: 0.574151
+ Accuracy: 0.707208,  Precision: 0.701387,  Recall: 0.915586,  F1: 0.794299,  AUC: 0.728231,  PR_AUC: 0.793765,  PR_AUC0: 0.793700
+matrix:[[ 3085  5232]
+ [ 1133 12289]]
+-----Val Loss: 0.456763
+ Accuracy: 0.813225,  Precision: 0.831680,  Recall: 0.874478,  F1: 0.852542,  AUC: 0.842348,  PR_AUC: 0.865972,  PR_AUC0: 0.865913
+matrix:[[1273  509]
+ [ 361 2515]]
+Epoch 46:
+ -----Train Loss: 0.565640
+ Accuracy: 0.714752,  Precision: 0.706185,  Recall: 0.921323,  F1: 0.799534,  AUC: 0.731836,  PR_AUC: 0.794958,  PR_AUC0: 0.794886
+matrix:[[ 3172  5145]
+ [ 1056 12366]]
+-----Val Loss: 0.455570
+ Accuracy: 0.819021,  Precision: 0.845631,  Recall: 0.864743,  F1: 0.855080,  AUC: 0.834809,  PR_AUC: 0.852610,  PR_AUC0: 0.852502
+matrix:[[1328  454]
+ [ 389 2487]]
+Epoch 47:
+ -----Train Loss: 0.568373
+ Accuracy: 0.711026,  Precision: 0.705954,  Recall: 0.911712,  F1: 0.795747,  AUC: 0.729661,  PR_AUC: 0.796784,  PR_AUC0: 0.796748
+matrix:[[ 3220  5097]
+ [ 1185 12237]]
+-----Val Loss: 0.451111
+ Accuracy: 0.823100,  Precision: 0.858240,  Recall: 0.854659,  F1: 0.856446,  AUC: 0.838891,  PR_AUC: 0.860231,  PR_AUC0: 0.860142
+matrix:[[1376  406]
+ [ 418 2458]]
+Epoch 48:
+ -----Train Loss: 0.567784
+ Accuracy: 0.711716,  Precision: 0.705026,  Recall: 0.916555,  F1: 0.796994,  AUC: 0.728728,  PR_AUC: 0.795523,  PR_AUC0: 0.795472
+matrix:[[ 3170  5147]
+ [ 1120 12302]]
+-----Val Loss: 0.453575
+ Accuracy: 0.822671,  Precision: 0.861425,  Recall: 0.849444,  F1: 0.855392,  AUC: 0.838320,  PR_AUC: 0.857437,  PR_AUC0: 0.857349
+matrix:[[1389  393]
+ [ 433 2443]]
+Epoch 49:
+ -----Train Loss: 0.574786
+ Accuracy: 0.706932,  Precision: 0.699938,  Recall: 0.919535,  F1: 0.794848,  AUC: 0.723015,  PR_AUC: 0.786748,  PR_AUC0: 0.786705
+matrix:[[ 3026  5291]
+ [ 1080 12342]]
+-----Val Loss: 0.460582
+ Accuracy: 0.806355,  Precision: 0.816143,  Recall: 0.885953,  F1: 0.849617,  AUC: 0.843571,  PR_AUC: 0.866628,  PR_AUC0: 0.866524
+matrix:[[1208  574]
+ [ 328 2548]]
+Epoch 50:
+ -----Train Loss: 0.574020
+ Accuracy: 0.707944,  Precision: 0.700017,  Recall: 0.922143,  F1: 0.795872,  AUC: 0.725298,  PR_AUC: 0.790208,  PR_AUC0: 0.790171
+matrix:[[ 3013  5304]
+ [ 1045 12377]]
+-----Val Loss: 0.460853
+ Accuracy: 0.812581,  Precision: 0.845702,  Recall: 0.851878,  F1: 0.848779,  AUC: 0.837027,  PR_AUC: 0.859318,  PR_AUC0: 0.859209
+matrix:[[1335  447]
+ [ 426 2450]]
+Epoch 51:
+ -----Train Loss: 0.574045
+ Accuracy: 0.707162,  Precision: 0.698470,  Recall: 0.925048,  F1: 0.795948,  AUC: 0.723379,  PR_AUC: 0.791043,  PR_AUC0: 0.791008
+matrix:[[ 2957  5360]
+ [ 1006 12416]]
+-----Val Loss: 0.473959
+ Accuracy: 0.796694,  Precision: 0.802636,  Recall: 0.889430,  F1: 0.843807,  AUC: 0.837263,  PR_AUC: 0.863521,  PR_AUC0: 0.863410
+matrix:[[1153  629]
+ [ 318 2558]]
+Epoch 52:
+ -----Train Loss: 0.577967
+ Accuracy: 0.703252,  Precision: 0.697490,  Recall: 0.917151,  F1: 0.792379,  AUC: 0.721843,  PR_AUC: 0.790576,  PR_AUC0: 0.790539
+matrix:[[ 2978  5339]
+ [ 1112 12310]]
+-----Val Loss: 0.461891
+ Accuracy: 0.817518,  Precision: 0.842461,  Recall: 0.866481,  F1: 0.854302,  AUC: 0.834360,  PR_AUC: 0.855223,  PR_AUC0: 0.855119
+matrix:[[1316  466]
+ [ 384 2492]]
+Epoch 53:
+ -----Train Loss: 0.570861
+ Accuracy: 0.712314,  Precision: 0.703451,  Recall: 0.923260,  F1: 0.798505,  AUC: 0.728609,  PR_AUC: 0.794223,  PR_AUC0: 0.794194
+matrix:[[ 3093  5224]
+ [ 1030 12392]]
+-----Val Loss: 0.455336
+ Accuracy: 0.821383,  Precision: 0.866834,  Recall: 0.839708,  F1: 0.853055,  AUC: 0.835867,  PR_AUC: 0.851197,  PR_AUC0: 0.850911
+matrix:[[1411  371]
+ [ 461 2415]]
+Epoch 54:
+ -----Train Loss: 0.570637
+ Accuracy: 0.711394,  Precision: 0.704065,  Recall: 0.918716,  F1: 0.797194,  AUC: 0.727674,  PR_AUC: 0.789947,  PR_AUC0: 0.789912
+matrix:[[ 3134  5183]
+ [ 1091 12331]]
+-----Val Loss: 0.455261
+ Accuracy: 0.817518,  Precision: 0.836769,  Recall: 0.875174,  F1: 0.855540,  AUC: 0.835456,  PR_AUC: 0.855227,  PR_AUC0: 0.855131
+matrix:[[1291  491]
+ [ 359 2517]]
+Epoch 55:
+ -----Train Loss: 0.572286
+ Accuracy: 0.710014,  Precision: 0.701164,  Recall: 0.924229,  F1: 0.797390,  AUC: 0.726657,  PR_AUC: 0.792240,  PR_AUC0: 0.792199
+matrix:[[ 3030  5287]
+ [ 1017 12405]]
+-----Val Loss: 0.463078
+ Accuracy: 0.811722,  Precision: 0.851813,  Recall: 0.841446,  F1: 0.846598,  AUC: 0.828813,  PR_AUC: 0.848899,  PR_AUC0: 0.848727
+matrix:[[1361  421]
+ [ 456 2420]]
+Epoch 56:
+ -----Train Loss: 0.567888
+ Accuracy: 0.711900,  Precision: 0.707471,  Recall: 0.909402,  F1: 0.795827,  AUC: 0.730743,  PR_AUC: 0.794602,  PR_AUC0: 0.794564
+matrix:[[ 3270  5047]
+ [ 1216 12206]]
+-----Val Loss: 0.449474
+ Accuracy: 0.820094,  Precision: 0.857293,  Recall: 0.850139,  F1: 0.853701,  AUC: 0.841401,  PR_AUC: 0.860545,  PR_AUC0: 0.860362
+matrix:[[1375  407]
+ [ 431 2445]]
+Epoch 57:
+ -----Train Loss: 0.570866
+ Accuracy: 0.708036,  Precision: 0.704444,  Recall: 0.908136,  F1: 0.793426,  AUC: 0.727706,  PR_AUC: 0.791881,  PR_AUC0: 0.791849
+matrix:[[ 3203  5114]
+ [ 1233 12189]]
+-----Val Loss: 0.461246
+ Accuracy: 0.813010,  Precision: 0.868160,  Recall: 0.821975,  F1: 0.844437,  AUC: 0.833784,  PR_AUC: 0.854744,  PR_AUC0: 0.854571
+matrix:[[1423  359]
+ [ 512 2364]]
+Epoch 58:
+ -----Train Loss: 0.565101
+ Accuracy: 0.712314,  Precision: 0.705622,  Recall: 0.916331,  F1: 0.797290,  AUC: 0.735148,  PR_AUC: 0.799522,  PR_AUC0: 0.799467
+matrix:[[ 3186  5131]
+ [ 1123 12299]]
+-----Val Loss: 0.449877
+ Accuracy: 0.821168,  Precision: 0.866260,  Recall: 0.840056,  F1: 0.852957,  AUC: 0.837367,  PR_AUC: 0.852194,  PR_AUC0: 0.852048
+matrix:[[1409  373]
+ [ 460 2416]]
+Epoch 59:
+ -----Train Loss: 0.570882
+ Accuracy: 0.709048,  Precision: 0.701333,  Recall: 0.920951,  F1: 0.796277,  AUC: 0.728451,  PR_AUC: 0.791996,  PR_AUC0: 0.791923
+matrix:[[ 3053  5264]
+ [ 1061 12361]]
+-----Val Loss: 0.464999
+ Accuracy: 0.811078,  Precision: 0.871556,  Recall: 0.813978,  F1: 0.841784,  AUC: 0.836713,  PR_AUC: 0.852139,  PR_AUC0: 0.851989
+matrix:[[1437  345]
+ [ 535 2341]]
+Epoch 60:
+ -----Train Loss: 0.564950
+ Accuracy: 0.713694,  Precision: 0.705516,  Recall: 0.920504,  F1: 0.798797,  AUC: 0.734054,  PR_AUC: 0.800596,  PR_AUC0: 0.800567
+matrix:[[ 3160  5157]
+ [ 1067 12355]]
+-----Val Loss: 0.452053
+ Accuracy: 0.823529,  Precision: 0.867837,  Recall: 0.842490,  F1: 0.854975,  AUC: 0.844630,  PR_AUC: 0.868903,  PR_AUC0: 0.868834
+matrix:[[1413  369]
+ [ 453 2423]]
+Epoch 61:
+ -----Train Loss: 0.567688
+ Accuracy: 0.713096,  Precision: 0.704317,  Recall: 0.922664,  F1: 0.798839,  AUC: 0.731008,  PR_AUC: 0.792797,  PR_AUC0: 0.792725
+matrix:[[ 3118  5199]
+ [ 1038 12384]]
+-----Val Loss: 0.447551
+ Accuracy: 0.824818,  Precision: 0.865507,  Recall: 0.848053,  F1: 0.856691,  AUC: 0.844314,  PR_AUC: 0.864488,  PR_AUC0: 0.864380
+matrix:[[1403  379]
+ [ 437 2439]]
+Epoch 62:
+ -----Train Loss: 0.565515
+ Accuracy: 0.717512,  Precision: 0.709863,  Recall: 0.917449,  F1: 0.800416,  AUC: 0.736244,  PR_AUC: 0.796924,  PR_AUC0: 0.796892
+matrix:[[ 3284  5033]
+ [ 1108 12314]]
+-----Val Loss: 0.456325
+ Accuracy: 0.818162,  Precision: 0.843549,  Recall: 0.866134,  F1: 0.854692,  AUC: 0.837903,  PR_AUC: 0.851212,  PR_AUC0: 0.851012
+matrix:[[1320  462]
+ [ 385 2491]]
+Epoch 63:
+ -----Train Loss: 0.569774
+ Accuracy: 0.708082,  Precision: 0.701756,  Recall: 0.916853,  F1: 0.795013,  AUC: 0.729122,  PR_AUC: 0.792952,  PR_AUC0: 0.792893
+matrix:[[ 3087  5230]
+ [ 1116 12306]]
+-----Val Loss: 0.463844
+ Accuracy: 0.805281,  Precision: 0.820163,  Recall: 0.876912,  F1: 0.847589,  AUC: 0.840277,  PR_AUC: 0.859050,  PR_AUC0: 0.858934
+matrix:[[1229  553]
+ [ 354 2522]]
+Epoch 64:
+ -----Train Loss: 0.567221
+ Accuracy: 0.711670,  Precision: 0.705504,  Recall: 0.914916,  F1: 0.796678,  AUC: 0.733901,  PR_AUC: 0.795994,  PR_AUC0: 0.795958
+matrix:[[ 3191  5126]
+ [ 1142 12280]]
+-----Val Loss: 0.449779
+ Accuracy: 0.823315,  Precision: 0.855559,  Recall: 0.858832,  F1: 0.857192,  AUC: 0.840796,  PR_AUC: 0.854826,  PR_AUC0: 0.854607
+matrix:[[1365  417]
+ [ 406 2470]]
+Epoch 65:
+ -----Train Loss: 0.565819
+ Accuracy: 0.712084,  Precision: 0.705208,  Recall: 0.917002,  F1: 0.797279,  AUC: 0.734677,  PR_AUC: 0.798496,  PR_AUC0: 0.798460
+matrix:[[ 3172  5145]
+ [ 1114 12308]]
+-----Val Loss: 0.450770
+ Accuracy: 0.825676,  Precision: 0.858832,  Recall: 0.858832,  F1: 0.858832,  AUC: 0.840747,  PR_AUC: 0.856267,  PR_AUC0: 0.856142
+matrix:[[1376  406]
+ [ 406 2470]]
+Epoch 66:
+ -----Train Loss: 0.567353
+ Accuracy: 0.711026,  Precision: 0.703744,  Recall: 0.918716,  F1: 0.796988,  AUC: 0.735455,  PR_AUC: 0.799170,  PR_AUC0: 0.799100
+matrix:[[ 3126  5191]
+ [ 1091 12331]]
+-----Val Loss: 0.443162
+ Accuracy: 0.826106,  Precision: 0.860936,  Recall: 0.856745,  F1: 0.858836,  AUC: 0.840980,  PR_AUC: 0.853626,  PR_AUC0: 0.853438
+matrix:[[1384  398]
+ [ 412 2464]]
+Epoch 67:
+ -----Train Loss: 0.567093
+ Accuracy: 0.709416,  Precision: 0.703850,  Recall: 0.913873,  F1: 0.795228,  AUC: 0.733537,  PR_AUC: 0.797930,  PR_AUC0: 0.797893
+matrix:[[ 3156  5161]
+ [ 1156 12266]]
+-----Val Loss: 0.462420
+ Accuracy: 0.807428,  Precision: 0.874385,  Recall: 0.803547,  F1: 0.837471,  AUC: 0.839853,  PR_AUC: 0.852965,  PR_AUC0: 0.852824
+matrix:[[1450  332]
+ [ 565 2311]]
+Epoch 68:
+ -----Train Loss: 0.568577
+ Accuracy: 0.712912,  Precision: 0.705394,  Recall: 0.918716,  F1: 0.798045,  AUC: 0.731728,  PR_AUC: 0.798447,  PR_AUC0: 0.798414
+matrix:[[ 3167  5150]
+ [ 1091 12331]]
+-----Val Loss: 0.450321
+ Accuracy: 0.817948,  Precision: 0.854050,  Recall: 0.850487,  F1: 0.852265,  AUC: 0.839870,  PR_AUC: 0.860517,  PR_AUC0: 0.860407
+matrix:[[1364  418]
+ [ 430 2446]]
+Epoch 69:
+ -----Train Loss: 0.563554
+ Accuracy: 0.714200,  Precision: 0.706787,  Recall: 0.917896,  F1: 0.798626,  AUC: 0.737887,  PR_AUC: 0.803648,  PR_AUC0: 0.803622
+matrix:[[ 3206  5111]
+ [ 1102 12320]]
+-----Val Loss: 0.450480
+ Accuracy: 0.819880,  Precision: 0.864401,  Recall: 0.840056,  F1: 0.852054,  AUC: 0.845930,  PR_AUC: 0.866614,  PR_AUC0: 0.866503
+matrix:[[1403  379]
+ [ 460 2416]]
+Epoch 70:
+ -----Train Loss: 0.562249
+ Accuracy: 0.717236,  Precision: 0.708608,  Recall: 0.920578,  F1: 0.800804,  AUC: 0.740030,  PR_AUC: 0.803303,  PR_AUC0: 0.803257
+matrix:[[ 3236  5081]
+ [ 1066 12356]]
+-----Val Loss: 0.449460
+ Accuracy: 0.826106,  Precision: 0.856699,  Recall: 0.862656,  F1: 0.859667,  AUC: 0.845592,  PR_AUC: 0.870096,  PR_AUC0: 0.870012
+matrix:[[1367  415]
+ [ 395 2481]]
+Epoch 71:
+ -----Train Loss: 0.565773
+ Accuracy: 0.711578,  Precision: 0.703344,  Recall: 0.921547,  F1: 0.797794,  AUC: 0.736437,  PR_AUC: 0.803052,  PR_AUC0: 0.803020
+matrix:[[ 3100  5217]
+ [ 1053 12369]]
+-----Val Loss: 0.445866
+ Accuracy: 0.824603,  Precision: 0.853416,  Recall: 0.864395,  F1: 0.858870,  AUC: 0.846223,  PR_AUC: 0.866006,  PR_AUC0: 0.865907
+matrix:[[1355  427]
+ [ 390 2486]]
+Epoch 72:
+ -----Train Loss: 0.565146
+ Accuracy: 0.713970,  Precision: 0.706821,  Recall: 0.917151,  F1: 0.798366,  AUC: 0.734544,  PR_AUC: 0.798584,  PR_AUC0: 0.798508
+matrix:[[ 3211  5106]
+ [ 1112 12310]]
+-----Val Loss: 0.442422
+ Accuracy: 0.828682,  Precision: 0.874010,  Recall: 0.844228,  F1: 0.858861,  AUC: 0.847068,  PR_AUC: 0.869975,  PR_AUC0: 0.869732
+matrix:[[1432  350]
+ [ 448 2428]]
+Epoch 73:
+ -----Train Loss: 0.562983
+ Accuracy: 0.715902,  Precision: 0.707313,  Recall: 0.920951,  F1: 0.800117,  AUC: 0.739289,  PR_AUC: 0.803642,  PR_AUC0: 0.803598
+matrix:[[ 3202  5115]
+ [ 1061 12361]]
+-----Val Loss: 0.441251
+ Accuracy: 0.827608,  Precision: 0.866903,  Recall: 0.851530,  F1: 0.859148,  AUC: 0.845539,  PR_AUC: 0.860409,  PR_AUC0: 0.860299
+matrix:[[1406  376]
+ [ 427 2449]]
+Epoch 74:
+ -----Train Loss: 0.561226
+ Accuracy: 0.718202,  Precision: 0.710697,  Recall: 0.916778,  F1: 0.800690,  AUC: 0.741051,  PR_AUC: 0.804222,  PR_AUC0: 0.804178
+matrix:[[ 3308  5009]
+ [ 1117 12305]]
+-----Val Loss: 0.443174
+ Accuracy: 0.826106,  Precision: 0.866572,  Recall: 0.849096,  F1: 0.857745,  AUC: 0.849574,  PR_AUC: 0.867470,  PR_AUC0: 0.867212
+matrix:[[1406  376]
+ [ 434 2442]]
+Epoch 75:
+ -----Train Loss: 0.566170
+ Accuracy: 0.712452,  Precision: 0.704547,  Recall: 0.920131,  F1: 0.798036,  AUC: 0.735895,  PR_AUC: 0.801339,  PR_AUC0: 0.801313
+matrix:[[ 3138  5179]
+ [ 1072 12350]]
+-----Val Loss: 0.449243
+ Accuracy: 0.816445,  Precision: 0.829260,  Recall: 0.884910,  F1: 0.856182,  AUC: 0.843213,  PR_AUC: 0.858324,  PR_AUC0: 0.858142
+matrix:[[1258  524]
+ [ 331 2545]]
+Epoch 76:
+ -----Train Loss: 0.562997
+ Accuracy: 0.715764,  Precision: 0.708216,  Recall: 0.917747,  F1: 0.799481,  AUC: 0.740905,  PR_AUC: 0.806849,  PR_AUC0: 0.806827
+matrix:[[ 3242  5075]
+ [ 1104 12318]]
+-----Val Loss: 0.442201
+ Accuracy: 0.828682,  Precision: 0.863541,  Recall: 0.858136,  F1: 0.860830,  AUC: 0.845018,  PR_AUC: 0.862253,  PR_AUC0: 0.862130
+matrix:[[1392  390]
+ [ 408 2468]]
+Epoch 77:
+ -----Train Loss: 0.559399
+ Accuracy: 0.717282,  Precision: 0.708553,  Recall: 0.920876,  F1: 0.800881,  AUC: 0.746594,  PR_AUC: 0.810150,  PR_AUC0: 0.810118
+matrix:[[ 3233  5084]
+ [ 1062 12360]]
+-----Val Loss: 0.445417
+ Accuracy: 0.819236,  Precision: 0.834320,  Recall: 0.882476,  F1: 0.857722,  AUC: 0.846057,  PR_AUC: 0.865650,  PR_AUC0: 0.865566
+matrix:[[1278  504]
+ [ 338 2538]]
+Epoch 78:
+ -----Train Loss: 0.562538
+ Accuracy: 0.713924,  Precision: 0.706212,  Recall: 0.918939,  F1: 0.798653,  AUC: 0.741034,  PR_AUC: 0.809333,  PR_AUC0: 0.809315
+matrix:[[ 3186  5131]
+ [ 1088 12334]]
+-----Val Loss: 0.443389
+ Accuracy: 0.825462,  Precision: 0.874410,  Recall: 0.837622,  F1: 0.855621,  AUC: 0.848044,  PR_AUC: 0.872704,  PR_AUC0: 0.872630
+matrix:[[1436  346]
+ [ 467 2409]]
+Epoch 79:
+ -----Train Loss: 0.562154
+ Accuracy: 0.713648,  Precision: 0.704891,  Recall: 0.922366,  F1: 0.799096,  AUC: 0.740390,  PR_AUC: 0.811926,  PR_AUC0: 0.811908
+matrix:[[ 3134  5183]
+ [ 1042 12380]]
+-----Val Loss: 0.440193
+ Accuracy: 0.826750,  Precision: 0.859826,  Recall: 0.859527,  F1: 0.859677,  AUC: 0.849200,  PR_AUC: 0.870065,  PR_AUC0: 0.869967
+matrix:[[1379  403]
+ [ 404 2472]]
+Epoch 80:
+ -----Train Loss: 0.559653
+ Accuracy: 0.719812,  Precision: 0.711793,  Recall: 0.917821,  F1: 0.801783,  AUC: 0.743563,  PR_AUC: 0.805468,  PR_AUC0: 0.805424
+matrix:[[ 3329  4988]
+ [ 1103 12319]]
+-----Val Loss: 0.437437
+ Accuracy: 0.829541,  Precision: 0.873386,  Recall: 0.846662,  F1: 0.859816,  AUC: 0.851731,  PR_AUC: 0.870937,  PR_AUC0: 0.870782
+matrix:[[1429  353]
+ [ 441 2435]]
+Epoch 81:
+ -----Train Loss: 0.562353
+ Accuracy: 0.713188,  Precision: 0.706203,  Recall: 0.916927,  F1: 0.797886,  AUC: 0.740444,  PR_AUC: 0.808785,  PR_AUC0: 0.808753
+matrix:[[ 3197  5120]
+ [ 1115 12307]]
+-----Val Loss: 0.463197
+ Accuracy: 0.812151,  Precision: 0.825790,  Recall: 0.881780,  F1: 0.852867,  AUC: 0.850470,  PR_AUC: 0.880026,  PR_AUC0: 0.879919
+matrix:[[1247  535]
+ [ 340 2536]]
+Epoch 82:
+ -----Train Loss: 0.566412
+ Accuracy: 0.710290,  Precision: 0.703776,  Recall: 0.916555,  F1: 0.796194,  AUC: 0.736202,  PR_AUC: 0.805969,  PR_AUC0: 0.805933
+matrix:[[ 3139  5178]
+ [ 1120 12302]]
+-----Val Loss: 0.440162
+ Accuracy: 0.827394,  Precision: 0.869736,  Recall: 0.847357,  F1: 0.858401,  AUC: 0.848564,  PR_AUC: 0.875222,  PR_AUC0: 0.875158
+matrix:[[1417  365]
+ [ 439 2437]]
+Epoch 83:
+ -----Train Loss: 0.559080
+ Accuracy: 0.719398,  Precision: 0.710088,  Recall: 0.921919,  F1: 0.802256,  AUC: 0.744705,  PR_AUC: 0.810159,  PR_AUC0: 0.810100
+matrix:[[ 3265  5052]
+ [ 1048 12374]]
+-----Val Loss: 0.438122
+ Accuracy: 0.828038,  Precision: 0.863398,  Recall: 0.857093,  F1: 0.860234,  AUC: 0.851191,  PR_AUC: 0.877019,  PR_AUC0: 0.876960
+matrix:[[1392  390]
+ [ 411 2465]]
+Epoch 84:
+ -----Train Loss: 0.559558
+ Accuracy: 0.716684,  Precision: 0.709369,  Recall: 0.916704,  F1: 0.799818,  AUC: 0.746996,  PR_AUC: 0.813913,  PR_AUC0: 0.813884
+matrix:[[ 3276  5041]
+ [ 1118 12304]]
+-----Val Loss: 0.440566
+ Accuracy: 0.825676,  Precision: 0.857588,  Recall: 0.860570,  F1: 0.859077,  AUC: 0.852573,  PR_AUC: 0.880471,  PR_AUC0: 0.880422
+matrix:[[1371  411]
+ [ 401 2475]]
+Epoch 85:
+ -----Train Loss: 0.558513
+ Accuracy: 0.715534,  Precision: 0.707511,  Recall: 0.919312,  F1: 0.799624,  AUC: 0.746307,  PR_AUC: 0.815277,  PR_AUC0: 0.815256
+matrix:[[ 3216  5101]
+ [ 1083 12339]]
+-----Val Loss: 0.437321
+ Accuracy: 0.830614,  Precision: 0.867300,  Recall: 0.856745,  F1: 0.861991,  AUC: 0.852374,  PR_AUC: 0.878597,  PR_AUC0: 0.878527
+matrix:[[1405  377]
+ [ 412 2464]]
+Epoch 86:
+ -----Train Loss: 0.559875
+ Accuracy: 0.716132,  Precision: 0.710822,  Recall: 0.910744,  F1: 0.798458,  AUC: 0.749130,  PR_AUC: 0.813595,  PR_AUC0: 0.813559
+matrix:[[ 3344  4973]
+ [ 1198 12224]]
+-----Val Loss: 0.440112
+ Accuracy: 0.829326,  Precision: 0.855241,  Recall: 0.871001,  F1: 0.863049,  AUC: 0.851766,  PR_AUC: 0.876283,  PR_AUC0: 0.876227
+matrix:[[1358  424]
+ [ 371 2505]]
+Epoch 87:
+ -----Train Loss: 0.558524
+ Accuracy: 0.720548,  Precision: 0.713216,  Recall: 0.915512,  F1: 0.801801,  AUC: 0.748300,  PR_AUC: 0.808434,  PR_AUC0: 0.808381
+matrix:[[ 3376  4941]
+ [ 1134 12288]]
+-----Val Loss: 0.441829
+ Accuracy: 0.824818,  Precision: 0.865507,  Recall: 0.848053,  F1: 0.856691,  AUC: 0.845542,  PR_AUC: 0.870131,  PR_AUC0: 0.870066
+matrix:[[1403  379]
+ [ 437 2439]]
+Epoch 88:
+ -----Train Loss: 0.557241
+ Accuracy: 0.718064,  Precision: 0.709653,  Recall: 0.919610,  F1: 0.801103,  AUC: 0.751539,  PR_AUC: 0.814860,  PR_AUC0: 0.814798
+matrix:[[ 3267  5050]
+ [ 1079 12343]]
+-----Val Loss: 0.435604
+ Accuracy: 0.831258,  Precision: 0.868217,  Recall: 0.856745,  F1: 0.862443,  AUC: 0.854516,  PR_AUC: 0.880252,  PR_AUC0: 0.880201
+matrix:[[1408  374]
+ [ 412 2464]]
+Epoch 89:
+ -----Train Loss: 0.559249
+ Accuracy: 0.718846,  Precision: 0.711590,  Recall: 0.915810,  F1: 0.800886,  AUC: 0.747637,  PR_AUC: 0.811920,  PR_AUC0: 0.811894
+matrix:[[ 3335  4982]
+ [ 1130 12292]]
+-----Val Loss: 0.451370
+ Accuracy: 0.821597,  Precision: 0.841859,  Recall: 0.875522,  F1: 0.858360,  AUC: 0.849873,  PR_AUC: 0.872809,  PR_AUC0: 0.872727
+matrix:[[1309  473]
+ [ 358 2518]]
+Epoch 90:
+ -----Train Loss: 0.561014
+ Accuracy: 0.712774,  Precision: 0.706573,  Recall: 0.914618,  F1: 0.797246,  AUC: 0.747654,  PR_AUC: 0.813758,  PR_AUC0: 0.813718
+matrix:[[ 3219  5098]
+ [ 1146 12276]]
+-----Val Loss: 0.439795
+ Accuracy: 0.829755,  Precision: 0.872097,  Recall: 0.848748,  F1: 0.860264,  AUC: 0.848952,  PR_AUC: 0.870258,  PR_AUC0: 0.870171
+matrix:[[1424  358]
+ [ 435 2441]]
+Epoch 91:
+ -----Train Loss: 0.557124
+ Accuracy: 0.717282,  Precision: 0.708888,  Recall: 0.919833,  F1: 0.800700,  AUC: 0.751379,  PR_AUC: 0.816150,  PR_AUC0: 0.816126
+matrix:[[ 3247  5070]
+ [ 1076 12346]]
+-----Val Loss: 0.472477
+ Accuracy: 0.811722,  Precision: 0.821693,  Recall: 0.887691,  F1: 0.853418,  AUC: 0.843407,  PR_AUC: 0.868314,  PR_AUC0: 0.868172
+matrix:[[1228  554]
+ [ 323 2553]]
+Epoch 92:
+ -----Train Loss: 0.556880
+ Accuracy: 0.717972,  Precision: 0.712157,  Recall: 0.911712,  F1: 0.799673,  AUC: 0.753900,  PR_AUC: 0.817278,  PR_AUC0: 0.817244
+matrix:[[ 3371  4946]
+ [ 1185 12237]]
+-----Val Loss: 0.437507
+ Accuracy: 0.832331,  Precision: 0.877206,  Recall: 0.847010,  F1: 0.861843,  AUC: 0.849458,  PR_AUC: 0.866807,  PR_AUC0: 0.866661
+matrix:[[1441  341]
+ [ 440 2436]]
+Epoch 93:
+ -----Train Loss: 0.555952
+ Accuracy: 0.719214,  Precision: 0.710554,  Recall: 0.919982,  F1: 0.801818,  AUC: 0.754140,  PR_AUC: 0.816405,  PR_AUC0: 0.816373
+matrix:[[ 3287  5030]
+ [ 1074 12348]]
+-----Val Loss: 0.434582
+ Accuracy: 0.830399,  Precision: 0.865196,  Recall: 0.859179,  F1: 0.862177,  AUC: 0.853696,  PR_AUC: 0.877216,  PR_AUC0: 0.877148
+matrix:[[1397  385]
+ [ 405 2471]]
+Epoch 94:
+ -----Train Loss: 0.554576
+ Accuracy: 0.720272,  Precision: 0.713538,  Recall: 0.913798,  F1: 0.801346,  AUC: 0.757084,  PR_AUC: 0.820891,  PR_AUC0: 0.820836
+matrix:[[ 3393  4924]
+ [ 1157 12265]]
+-----Val Loss: 0.447128
+ Accuracy: 0.823529,  Precision: 0.843708,  Recall: 0.876565,  F1: 0.859823,  AUC: 0.848332,  PR_AUC: 0.870726,  PR_AUC0: 0.870654
+matrix:[[1315  467]
+ [ 355 2521]]
+Epoch 95:
+ -----Train Loss: 0.556004
+ Accuracy: 0.715396,  Precision: 0.708441,  Recall: 0.916033,  F1: 0.798973,  AUC: 0.755558,  PR_AUC: 0.820837,  PR_AUC0: 0.820813
+matrix:[[ 3257  5060]
+ [ 1127 12295]]
+-----Val Loss: 0.433878
+ Accuracy: 0.832976,  Precision: 0.868070,  Recall: 0.860223,  F1: 0.864129,  AUC: 0.852311,  PR_AUC: 0.871665,  PR_AUC0: 0.871415
+matrix:[[1406  376]
+ [ 402 2474]]
+Epoch 96:
+ -----Train Loss: 0.555020
+ Accuracy: 0.718754,  Precision: 0.711998,  Recall: 0.914320,  F1: 0.800574,  AUC: 0.755742,  PR_AUC: 0.817455,  PR_AUC0: 0.817423
+matrix:[[ 3353  4964]
+ [ 1150 12272]]
+-----Val Loss: 0.435676
+ Accuracy: 0.830185,  Precision: 0.863367,  Recall: 0.861266,  F1: 0.862315,  AUC: 0.852976,  PR_AUC: 0.874312,  PR_AUC0: 0.874236
+matrix:[[1390  392]
+ [ 399 2477]]
+Epoch 97:
+ -----Train Loss: 0.555852
+ Accuracy: 0.719214,  Precision: 0.711137,  Recall: 0.918194,  F1: 0.801509,  AUC: 0.756533,  PR_AUC: 0.819791,  PR_AUC0: 0.819762
+matrix:[[ 3311  5006]
+ [ 1098 12324]]
+-----Val Loss: 0.439227
+ Accuracy: 0.830614,  Precision: 0.870693,  Recall: 0.852225,  F1: 0.861360,  AUC: 0.854435,  PR_AUC: 0.879397,  PR_AUC0: 0.879336
+matrix:[[1418  364]
+ [ 425 2451]]
+Epoch 98:
+ -----Train Loss: 0.558166
+ Accuracy: 0.715396,  Precision: 0.707295,  Recall: 0.919610,  F1: 0.799598,  AUC: 0.753494,  PR_AUC: 0.819068,  PR_AUC0: 0.819052
+matrix:[[ 3209  5108]
+ [ 1079 12343]]
+-----Val Loss: 0.435011
+ Accuracy: 0.829755,  Precision: 0.865567,  Recall: 0.857441,  F1: 0.861485,  AUC: 0.855713,  PR_AUC: 0.885052,  PR_AUC0: 0.885010
+matrix:[[1399  383]
+ [ 410 2466]]
+Epoch 99:
+ -----Train Loss: 0.555006
+ Accuracy: 0.721468,  Precision: 0.713425,  Recall: 0.917374,  F1: 0.802647,  AUC: 0.757397,  PR_AUC: 0.817152,  PR_AUC0: 0.817121
+matrix:[[ 3371  4946]
+ [ 1109 12313]]
+-----Val Loss: 0.433952
+ Accuracy: 0.830399,  Precision: 0.863415,  Recall: 0.861613,  F1: 0.862513,  AUC: 0.859479,  PR_AUC: 0.887165,  PR_AUC0: 0.887119
+matrix:[[1390  392]
+ [ 398 2478]]
+Epoch 100:
+ -----Train Loss: 0.554462
+ Accuracy: 0.718846,  Precision: 0.716862,  Recall: 0.900164,  F1: 0.798124,  AUC: 0.760443,  PR_AUC: 0.821566,  PR_AUC0: 0.821546
+matrix:[[ 3545  4772]
+ [ 1340 12082]]
+-----Val Loss: 0.433177
+ Accuracy: 0.832117,  Precision: 0.867885,  Recall: 0.858832,  F1: 0.863334,  AUC: 0.856600,  PR_AUC: 0.880901,  PR_AUC0: 0.880842
+matrix:[[1406  376]
+ [ 406 2470]]
+Epoch 101:
+ -----Train Loss: 0.556203
+ Accuracy: 0.715350,  Precision: 0.715400,  Recall: 0.895023,  F1: 0.795194,  AUC: 0.759471,  PR_AUC: 0.822347,  PR_AUC0: 0.822328
+matrix:[[ 3538  4779]
+ [ 1409 12013]]
+-----Val Loss: 0.432409
+ Accuracy: 0.833190,  Precision: 0.874688,  Recall: 0.851878,  F1: 0.863132,  AUC: 0.855582,  PR_AUC: 0.876858,  PR_AUC0: 0.876740
+matrix:[[1431  351]
+ [ 426 2450]]
+Epoch 102:
+ -----Train Loss: 0.554680
+ Accuracy: 0.719306,  Precision: 0.715193,  Recall: 0.906273,  F1: 0.799474,  AUC: 0.760390,  PR_AUC: 0.820523,  PR_AUC0: 0.820479
+matrix:[[ 3473  4844]
+ [ 1258 12164]]
+-----Val Loss: 0.441428
+ Accuracy: 0.825676,  Precision: 0.878022,  Recall: 0.833449,  F1: 0.855155,  AUC: 0.853045,  PR_AUC: 0.872837,  PR_AUC0: 0.872597
+matrix:[[1449  333]
+ [ 479 2397]]
+Epoch 103:
+ -----Train Loss: 0.552342
+ Accuracy: 0.718110,  Precision: 0.715162,  Recall: 0.903144,  F1: 0.798235,  AUC: 0.762285,  PR_AUC: 0.824062,  PR_AUC0: 0.824040
+matrix:[[ 3489  4828]
+ [ 1300 12122]]
+-----Val Loss: 0.435836
+ Accuracy: 0.829541,  Precision: 0.860707,  Recall: 0.863700,  F1: 0.862201,  AUC: 0.855689,  PR_AUC: 0.874533,  PR_AUC0: 0.874356
+matrix:[[1380  402]
+ [ 392 2484]]
+Epoch 104:
+ -----Train Loss: 0.553667
+ Accuracy: 0.722158,  Precision: 0.719572,  Recall: 0.901207,  F1: 0.800212,  AUC: 0.761194,  PR_AUC: 0.820157,  PR_AUC0: 0.820128
+matrix:[[ 3603  4714]
+ [ 1326 12096]]
+-----Val Loss: 0.436946
+ Accuracy: 0.830185,  Precision: 0.872454,  Recall: 0.849096,  F1: 0.860617,  AUC: 0.853232,  PR_AUC: 0.876753,  PR_AUC0: 0.876664
+matrix:[[1425  357]
+ [ 434 2442]]
+Epoch 105:
+ -----Train Loss: 0.554017
+ Accuracy: 0.716546,  Precision: 0.713203,  Recall: 0.904709,  F1: 0.797622,  AUC: 0.760930,  PR_AUC: 0.824699,  PR_AUC0: 0.824681
+matrix:[[ 3434  4883]
+ [ 1279 12143]]
+-----Val Loss: 0.436087
+ Accuracy: 0.830614,  Precision: 0.862957,  Recall: 0.862656,  F1: 0.862806,  AUC: 0.855222,  PR_AUC: 0.877241,  PR_AUC0: 0.877159
+matrix:[[1388  394]
+ [ 395 2481]]
+Epoch 106:
+ -----Train Loss: 0.551296
+ Accuracy: 0.718570,  Precision: 0.720133,  Recall: 0.890106,  F1: 0.796148,  AUC: 0.765290,  PR_AUC: 0.824760,  PR_AUC0: 0.824698
+matrix:[[ 3674  4643]
+ [ 1475 11947]]
+-----Val Loss: 0.432630
+ Accuracy: 0.832546,  Precision: 0.872688,  Recall: 0.853268,  F1: 0.862869,  AUC: 0.857187,  PR_AUC: 0.879406,  PR_AUC0: 0.879324
+matrix:[[1424  358]
+ [ 422 2454]]
+Epoch 107:
+ -----Train Loss: 0.556829
+ Accuracy: 0.715948,  Precision: 0.719726,  Recall: 0.884294,  F1: 0.793568,  AUC: 0.759322,  PR_AUC: 0.821398,  PR_AUC0: 0.821336
+matrix:[[ 3695  4622]
+ [ 1553 11869]]
+-----Val Loss: 0.435017
+ Accuracy: 0.831258,  Precision: 0.872416,  Recall: 0.851182,  F1: 0.861668,  AUC: 0.852946,  PR_AUC: 0.877851,  PR_AUC0: 0.877777
+matrix:[[1424  358]
+ [ 428 2448]]
+Epoch 108:
+ -----Train Loss: 0.549191
+ Accuracy: 0.719628,  Precision: 0.720361,  Recall: 0.892266,  F1: 0.797151,  AUC: 0.767491,  PR_AUC: 0.826279,  PR_AUC0: 0.826253
+matrix:[[ 3668  4649]
+ [ 1446 11976]]
+-----Val Loss: 0.432226
+ Accuracy: 0.833190,  Precision: 0.871768,  Recall: 0.855702,  F1: 0.863660,  AUC: 0.853337,  PR_AUC: 0.872192,  PR_AUC0: 0.872100
+matrix:[[1420  362]
+ [ 415 2461]]
+Epoch 109:
+ -----Train Loss: 0.552448
+ Accuracy: 0.721928,  Precision: 0.717521,  Recall: 0.906497,  F1: 0.801014,  AUC: 0.762449,  PR_AUC: 0.823972,  PR_AUC0: 0.823944
+matrix:[[ 3527  4790]
+ [ 1255 12167]]
+-----Val Loss: 0.441535
+ Accuracy: 0.827179,  Precision: 0.874232,  Recall: 0.841099,  F1: 0.857345,  AUC: 0.853378,  PR_AUC: 0.875401,  PR_AUC0: 0.875145
+matrix:[[1434  348]
+ [ 457 2419]]
+Epoch 110:
+ -----Train Loss: 0.552322
+ Accuracy: 0.720870,  Precision: 0.722444,  Recall: 0.889733,  F1: 0.797409,  AUC: 0.763545,  PR_AUC: 0.824831,  PR_AUC0: 0.824813
+matrix:[[ 3729  4588]
+ [ 1480 11942]]
+-----Val Loss: 0.443318
+ Accuracy: 0.825676,  Precision: 0.875000,  Recall: 0.837274,  F1: 0.855721,  AUC: 0.851463,  PR_AUC: 0.878663,  PR_AUC0: 0.878589
+matrix:[[1438  344]
+ [ 468 2408]]
+Epoch 111:
+ -----Train Loss: 0.546961
+ Accuracy: 0.725884,  Precision: 0.725128,  Recall: 0.895470,  F1: 0.801347,  AUC: 0.770771,  PR_AUC: 0.827327,  PR_AUC0: 0.827306
+matrix:[[ 3761  4556]
+ [ 1403 12019]]
+-----Val Loss: 0.431909
+ Accuracy: 0.832976,  Precision: 0.871722,  Recall: 0.855355,  F1: 0.863461,  AUC: 0.857906,  PR_AUC: 0.886242,  PR_AUC0: 0.886194
+matrix:[[1420  362]
+ [ 416 2460]]
+Epoch 112:
+ -----Train Loss: 0.550504
+ Accuracy: 0.721008,  Precision: 0.721237,  Recall: 0.893459,  F1: 0.798163,  AUC: 0.766645,  PR_AUC: 0.827168,  PR_AUC0: 0.827151
+matrix:[[ 3682  4635]
+ [ 1430 11992]]
+-----Val Loss: 0.434485
+ Accuracy: 0.832331,  Precision: 0.868449,  Recall: 0.858484,  F1: 0.863438,  AUC: 0.858237,  PR_AUC: 0.885004,  PR_AUC0: 0.884951
+matrix:[[1408  374]
+ [ 407 2469]]
+Epoch 113:
+ -----Train Loss: 0.548950
+ Accuracy: 0.723906,  Precision: 0.724495,  Recall: 0.892043,  F1: 0.799586,  AUC: 0.768100,  PR_AUC: 0.828136,  PR_AUC0: 0.828113
+matrix:[[ 3764  4553]
+ [ 1449 11973]]
+-----Val Loss: 0.433808
+ Accuracy: 0.831043,  Precision: 0.866620,  Recall: 0.858484,  F1: 0.862533,  AUC: 0.853239,  PR_AUC: 0.874951,  PR_AUC0: 0.874823
+matrix:[[1402  380]
+ [ 407 2469]]
+Epoch 114:
+ -----Train Loss: 0.548611
+ Accuracy: 0.722526,  Precision: 0.719810,  Recall: 0.901505,  F1: 0.800476,  AUC: 0.768118,  PR_AUC: 0.827321,  PR_AUC0: 0.827287
+matrix:[[ 3607  4710]
+ [ 1322 12100]]
+-----Val Loss: 0.437902
+ Accuracy: 0.826535,  Precision: 0.857291,  Recall: 0.862656,  F1: 0.859965,  AUC: 0.852071,  PR_AUC: 0.863692,  PR_AUC0: 0.863498
+matrix:[[1369  413]
+ [ 395 2481]]
+Epoch 115:
+ -----Train Loss: 0.552101
+ Accuracy: 0.718800,  Precision: 0.724768,  Recall: 0.877962,  F1: 0.794043,  AUC: 0.764364,  PR_AUC: 0.827957,  PR_AUC0: 0.827936
+matrix:[[ 3842  4475]
+ [ 1638 11784]]
+-----Val Loss: 0.443439
+ Accuracy: 0.823529,  Precision: 0.850751,  Recall: 0.866134,  F1: 0.858374,  AUC: 0.853756,  PR_AUC: 0.877918,  PR_AUC0: 0.877844
+matrix:[[1345  437]
+ [ 385 2491]]
+Epoch 116:
+ -----Train Loss: 0.548690
+ Accuracy: 0.721882,  Precision: 0.720918,  Recall: 0.896662,  F1: 0.799243,  AUC: 0.767673,  PR_AUC: 0.828099,  PR_AUC0: 0.828077
+matrix:[[ 3658  4659]
+ [ 1387 12035]]
+-----Val Loss: 0.433999
+ Accuracy: 0.829755,  Precision: 0.866596,  Recall: 0.856050,  F1: 0.861291,  AUC: 0.856290,  PR_AUC: 0.880537,  PR_AUC0: 0.880445
+matrix:[[1403  379]
+ [ 414 2462]]
+Epoch 117:
+ -----Train Loss: 0.549233
+ Accuracy: 0.722664,  Precision: 0.723448,  Recall: 0.891670,  F1: 0.798799,  AUC: 0.767623,  PR_AUC: 0.826952,  PR_AUC0: 0.826930
+matrix:[[ 3742  4575]
+ [ 1454 11968]]
+-----Val Loss: 0.432389
+ Accuracy: 0.832976,  Precision: 0.869887,  Recall: 0.857789,  F1: 0.863796,  AUC: 0.855345,  PR_AUC: 0.876775,  PR_AUC0: 0.876668
+matrix:[[1413  369]
+ [ 409 2467]]
+Epoch 118:
+ -----Train Loss: 0.553333
+ Accuracy: 0.720732,  Precision: 0.720817,  Recall: 0.893906,  F1: 0.798084,  AUC: 0.762611,  PR_AUC: 0.821947,  PR_AUC0: 0.821921
+matrix:[[ 3670  4647]
+ [ 1424 11998]]
+-----Val Loss: 0.432701
+ Accuracy: 0.833190,  Precision: 0.872295,  Recall: 0.855007,  F1: 0.863565,  AUC: 0.856638,  PR_AUC: 0.882171,  PR_AUC0: 0.881950
+matrix:[[1422  360]
+ [ 417 2459]]
+Epoch 119:
+ -----Train Loss: 0.549700
+ Accuracy: 0.720870,  Precision: 0.720048,  Recall: 0.896439,  F1: 0.798619,  AUC: 0.767656,  PR_AUC: 0.828803,  PR_AUC0: 0.828774
+matrix:[[ 3639  4678]
+ [ 1390 12032]]
+-----Val Loss: 0.432528
+ Accuracy: 0.832546,  Precision: 0.867461,  Recall: 0.860223,  F1: 0.863827,  AUC: 0.856952,  PR_AUC: 0.883303,  PR_AUC0: 0.883076
+matrix:[[1404  378]
+ [ 402 2474]]
+Epoch 120:
+ -----Train Loss: 0.546201
+ Accuracy: 0.722664,  Precision: 0.724780,  Recall: 0.888020,  F1: 0.798138,  AUC: 0.770078,  PR_AUC: 0.830913,  PR_AUC0: 0.830855
+matrix:[[ 3791  4526]
+ [ 1503 11919]]
+-----Val Loss: 0.433379
+ Accuracy: 0.831473,  Precision: 0.869827,  Recall: 0.855007,  F1: 0.862353,  AUC: 0.856512,  PR_AUC: 0.882231,  PR_AUC0: 0.882165
+matrix:[[1414  368]
+ [ 417 2459]]
+Epoch 121:
+ -----Train Loss: 0.551176
+ Accuracy: 0.721836,  Precision: 0.729165,  Recall: 0.874162,  F1: 0.795107,  AUC: 0.766556,  PR_AUC: 0.827007,  PR_AUC0: 0.826991
+matrix:[[ 3959  4358]
+ [ 1689 11733]]
+-----Val Loss: 0.432875
+ Accuracy: 0.832761,  Precision: 0.873797,  Recall: 0.852225,  F1: 0.862876,  AUC: 0.858078,  PR_AUC: 0.885078,  PR_AUC0: 0.885018
+matrix:[[1428  354]
+ [ 425 2451]]
+Epoch 122:
+ -----Train Loss: 0.548438
+ Accuracy: 0.721468,  Precision: 0.725304,  Recall: 0.883475,  F1: 0.796614,  AUC: 0.769483,  PR_AUC: 0.828918,  PR_AUC0: 0.828889
+matrix:[[ 3826  4491]
+ [ 1564 11858]]
+-----Val Loss: 0.433277
+ Accuracy: 0.830829,  Precision: 0.864271,  Recall: 0.861266,  F1: 0.862766,  AUC: 0.855755,  PR_AUC: 0.878276,  PR_AUC0: 0.878180
+matrix:[[1393  389]
+ [ 399 2477]]
+Epoch 123:
+ -----Train Loss: 0.548605
+ Accuracy: 0.723722,  Precision: 0.729002,  Recall: 0.879452,  F1: 0.797191,  AUC: 0.769693,  PR_AUC: 0.828383,  PR_AUC0: 0.828349
+matrix:[[ 3929  4388]
+ [ 1618 11804]]
+-----Val Loss: 0.433684
+ Accuracy: 0.831043,  Precision: 0.863052,  Recall: 0.863352,  F1: 0.863202,  AUC: 0.855240,  PR_AUC: 0.881676,  PR_AUC0: 0.881621
+matrix:[[1388  394]
+ [ 393 2483]]
+Epoch 124:
+ -----Train Loss: 0.549041
+ Accuracy: 0.721974,  Precision: 0.727998,  Recall: 0.877589,  F1: 0.795825,  AUC: 0.769632,  PR_AUC: 0.828246,  PR_AUC0: 0.828222
+matrix:[[ 3916  4401]
+ [ 1643 11779]]
+-----Val Loss: 0.436703
+ Accuracy: 0.831043,  Precision: 0.862548,  Recall: 0.864047,  F1: 0.863297,  AUC: 0.856012,  PR_AUC: 0.879340,  PR_AUC0: 0.879253
+matrix:[[1386  396]
+ [ 391 2485]]
+Epoch 125:
+ -----Train Loss: 0.546464
+ Accuracy: 0.724780,  Precision: 0.724974,  Recall: 0.893011,  F1: 0.800267,  AUC: 0.770678,  PR_AUC: 0.831428,  PR_AUC0: 0.831408
+matrix:[[ 3770  4547]
+ [ 1436 11986]]
+-----Val Loss: 0.432894
+ Accuracy: 0.831258,  Precision: 0.858614,  Recall: 0.869958,  F1: 0.864249,  AUC: 0.856799,  PR_AUC: 0.878371,  PR_AUC0: 0.878249
+matrix:[[1370  412]
+ [ 374 2502]]
+Epoch 126:
+ -----Train Loss: 0.548669
+ Accuracy: 0.722526,  Precision: 0.721125,  Recall: 0.897780,  F1: 0.799814,  AUC: 0.768477,  PR_AUC: 0.827501,  PR_AUC0: 0.827473
+matrix:[[ 3657  4660]
+ [ 1372 12050]]
+-----Val Loss: 0.431161
+ Accuracy: 0.832761,  Precision: 0.873797,  Recall: 0.852225,  F1: 0.862876,  AUC: 0.856705,  PR_AUC: 0.881972,  PR_AUC0: 0.881902
+matrix:[[1428  354]
+ [ 425 2451]]
+Epoch 127:
+ -----Train Loss: 0.546088
+ Accuracy: 0.725378,  Precision: 0.724593,  Recall: 0.895619,  F1: 0.801080,  AUC: 0.772269,  PR_AUC: 0.832178,  PR_AUC0: 0.832153
+matrix:[[ 3748  4569]
+ [ 1401 12021]]
+-----Val Loss: 0.434807
+ Accuracy: 0.832546,  Precision: 0.875897,  Recall: 0.849096,  F1: 0.862288,  AUC: 0.856181,  PR_AUC: 0.878251,  PR_AUC0: 0.878151
+matrix:[[1436  346]
+ [ 434 2442]]
+Epoch 128:
+ -----Train Loss: 0.546730
+ Accuracy: 0.722388,  Precision: 0.726276,  Recall: 0.883251,  F1: 0.797109,  AUC: 0.771751,  PR_AUC: 0.829206,  PR_AUC0: 0.829185
+matrix:[[ 3849  4468]
+ [ 1567 11855]]
+-----Val Loss: 0.431670
+ Accuracy: 0.832976,  Precision: 0.873044,  Recall: 0.853616,  F1: 0.863221,  AUC: 0.855793,  PR_AUC: 0.876867,  PR_AUC0: 0.876779
+matrix:[[1425  357]
+ [ 421 2455]]
+Epoch 129:
+ -----Train Loss: 0.548506
+ Accuracy: 0.723630,  Precision: 0.723691,  Recall: 0.893533,  F1: 0.799693,  AUC: 0.770025,  PR_AUC: 0.830810,  PR_AUC0: 0.830796
+matrix:[[ 3738  4579]
+ [ 1429 11993]]
+-----Val Loss: 0.430965
+ Accuracy: 0.833620,  Precision: 0.872122,  Recall: 0.856050,  F1: 0.864011,  AUC: 0.857267,  PR_AUC: 0.886248,  PR_AUC0: 0.886203
+matrix:[[1421  361]
+ [ 414 2462]]
+Epoch 130:
+ -----Train Loss: 0.546434
+ Accuracy: 0.723124,  Precision: 0.727519,  Recall: 0.881836,  F1: 0.797279,  AUC: 0.772758,  PR_AUC: 0.833088,  PR_AUC0: 0.833072
+matrix:[[ 3884  4433]
+ [ 1586 11836]]
+-----Val Loss: 0.434701
+ Accuracy: 0.827823,  Precision: 0.868515,  Recall: 0.849791,  F1: 0.859051,  AUC: 0.856954,  PR_AUC: 0.881672,  PR_AUC0: 0.881598
+matrix:[[1412  370]
+ [ 432 2444]]
+Epoch 131:
+ -----Train Loss: 0.546237
+ Accuracy: 0.725194,  Precision: 0.726852,  Recall: 0.888988,  F1: 0.799786,  AUC: 0.771090,  PR_AUC: 0.830459,  PR_AUC0: 0.830441
+matrix:[[ 3833  4484]
+ [ 1490 11932]]
+-----Val Loss: 0.431891
+ Accuracy: 0.831473,  Precision: 0.864667,  Recall: 0.861961,  F1: 0.863312,  AUC: 0.856699,  PR_AUC: 0.884306,  PR_AUC0: 0.884256
+matrix:[[1394  388]
+ [ 397 2479]]
+Epoch 132:
+ -----Train Loss: 0.548075
+ Accuracy: 0.718708,  Precision: 0.721814,  Recall: 0.885785,  F1: 0.795437,  AUC: 0.770696,  PR_AUC: 0.833191,  PR_AUC0: 0.833176
+matrix:[[ 3735  4582]
+ [ 1533 11889]]
+-----Val Loss: 0.433868
+ Accuracy: 0.831258,  Precision: 0.871886,  Recall: 0.851878,  F1: 0.861766,  AUC: 0.854973,  PR_AUC: 0.883166,  PR_AUC0: 0.883107
+matrix:[[1422  360]
+ [ 426 2450]]
+Epoch 133:
+ -----Train Loss: 0.546869
+ Accuracy: 0.724320,  Precision: 0.728458,  Recall: 0.882432,  F1: 0.798086,  AUC: 0.771580,  PR_AUC: 0.831715,  PR_AUC0: 0.831694
+matrix:[[ 3902  4415]
+ [ 1578 11844]]
+-----Val Loss: 0.432710
+ Accuracy: 0.834049,  Precision: 0.869336,  Recall: 0.860570,  F1: 0.864931,  AUC: 0.856166,  PR_AUC: 0.881227,  PR_AUC0: 0.881006
+matrix:[[1410  372]
+ [ 401 2475]]
+Epoch 134:
+ -----Train Loss: 0.546806
+ Accuracy: 0.720686,  Precision: 0.725350,  Recall: 0.881314,  F1: 0.795762,  AUC: 0.772386,  PR_AUC: 0.833960,  PR_AUC0: 0.833945
+matrix:[[ 3838  4479]
+ [ 1593 11829]]
+-----Val Loss: 0.431847
+ Accuracy: 0.833405,  Precision: 0.874732,  Recall: 0.852225,  F1: 0.863332,  AUC: 0.855681,  PR_AUC: 0.881488,  PR_AUC0: 0.881384
+matrix:[[1431  351]
+ [ 425 2451]]
+Epoch 135:
+ -----Train Loss: 0.546373
+ Accuracy: 0.723722,  Precision: 0.728832,  Recall: 0.879899,  F1: 0.797273,  AUC: 0.772558,  PR_AUC: 0.831458,  PR_AUC0: 0.831419
+matrix:[[ 3923  4394]
+ [ 1612 11810]]
+-----Val Loss: 0.433094
+ Accuracy: 0.831043,  Precision: 0.863811,  Recall: 0.862309,  F1: 0.863059,  AUC: 0.855850,  PR_AUC: 0.880988,  PR_AUC0: 0.880842
+matrix:[[1391  391]
+ [ 396 2480]]
+Epoch 136:
+ -----Train Loss: 0.547835
+ Accuracy: 0.722112,  Precision: 0.723193,  Recall: 0.890925,  F1: 0.798344,  AUC: 0.770049,  PR_AUC: 0.830586,  PR_AUC0: 0.830534
+matrix:[[ 3740  4577]
+ [ 1464 11958]]
+-----Val Loss: 0.433190
+ Accuracy: 0.830614,  Precision: 0.871220,  Recall: 0.851530,  F1: 0.861263,  AUC: 0.857215,  PR_AUC: 0.883393,  PR_AUC0: 0.883315
+matrix:[[1420  362]
+ [ 427 2449]]
+Epoch 137:
+ -----Train Loss: 0.544735
+ Accuracy: 0.726896,  Precision: 0.734038,  Recall: 0.874534,  F1: 0.798150,  AUC: 0.773507,  PR_AUC: 0.831823,  PR_AUC0: 0.831794
+matrix:[[ 4064  4253]
+ [ 1684 11738]]
+-----Val Loss: 0.432351
+ Accuracy: 0.832546,  Precision: 0.873485,  Recall: 0.852225,  F1: 0.862724,  AUC: 0.857527,  PR_AUC: 0.882792,  PR_AUC0: 0.882729
+matrix:[[1427  355]
+ [ 425 2451]]
+Epoch 138:
+ -----Train Loss: 0.543192
+ Accuracy: 0.727034,  Precision: 0.732316,  Recall: 0.879303,  F1: 0.799106,  AUC: 0.776019,  PR_AUC: 0.835007,  PR_AUC0: 0.834992
+matrix:[[ 4003  4314]
+ [ 1620 11802]]
+-----Val Loss: 0.431472
+ Accuracy: 0.832976,  Precision: 0.873044,  Recall: 0.853616,  F1: 0.863221,  AUC: 0.858481,  PR_AUC: 0.883658,  PR_AUC0: 0.883580
+matrix:[[1425  357]
+ [ 421 2455]]
+Epoch 139:
+ -----Train Loss: 0.541875
+ Accuracy: 0.725010,  Precision: 0.729867,  Recall: 0.880495,  F1: 0.798136,  AUC: 0.777411,  PR_AUC: 0.838284,  PR_AUC0: 0.838258
+matrix:[[ 3943  4374]
+ [ 1604 11818]]
+-----Val Loss: 0.432399
+ Accuracy: 0.833834,  Precision: 0.870592,  Recall: 0.858484,  F1: 0.864496,  AUC: 0.858902,  PR_AUC: 0.886273,  PR_AUC0: 0.886059
+matrix:[[1415  367]
+ [ 407 2469]]
+Epoch 140:
+ -----Train Loss: 0.544016
+ Accuracy: 0.723538,  Precision: 0.728624,  Recall: 0.879973,  F1: 0.797179,  AUC: 0.774746,  PR_AUC: 0.834507,  PR_AUC0: 0.834489
+matrix:[[ 3918  4399]
+ [ 1611 11811]]
+-----Val Loss: 0.431028
+ Accuracy: 0.833405,  Precision: 0.873134,  Recall: 0.854312,  F1: 0.863620,  AUC: 0.857144,  PR_AUC: 0.883390,  PR_AUC0: 0.883323
+matrix:[[1425  357]
+ [ 419 2457]]
+Epoch 141:
+ -----Train Loss: 0.541815
+ Accuracy: 0.726942,  Precision: 0.729379,  Recall: 0.886753,  F1: 0.800403,  AUC: 0.777046,  PR_AUC: 0.836424,  PR_AUC0: 0.836408
+matrix:[[ 3901  4416]
+ [ 1520 11902]]
+-----Val Loss: 0.432866
+ Accuracy: 0.831473,  Precision: 0.875944,  Recall: 0.847010,  F1: 0.861234,  AUC: 0.855828,  PR_AUC: 0.883591,  PR_AUC0: 0.883541
+matrix:[[1437  345]
+ [ 440 2436]]
+Epoch 142:
+ -----Train Loss: 0.543672
+ Accuracy: 0.727402,  Precision: 0.730703,  Recall: 0.884443,  F1: 0.800256,  AUC: 0.774849,  PR_AUC: 0.833435,  PR_AUC0: 0.833417
+matrix:[[ 3942  4375]
+ [ 1551 11871]]
+-----Val Loss: 0.432607
+ Accuracy: 0.831043,  Precision: 0.869996,  Recall: 0.853964,  F1: 0.861906,  AUC: 0.857385,  PR_AUC: 0.883856,  PR_AUC0: 0.883794
+matrix:[[1415  367]
+ [ 420 2456]]
+Epoch 143:
+ -----Train Loss: 0.546160
+ Accuracy: 0.723262,  Precision: 0.731380,  Recall: 0.872076,  F1: 0.795555,  AUC: 0.773424,  PR_AUC: 0.835251,  PR_AUC0: 0.835235
+matrix:[[ 4018  4299]
+ [ 1717 11705]]
+-----Val Loss: 0.432521
+ Accuracy: 0.832331,  Precision: 0.870272,  Recall: 0.856050,  F1: 0.863103,  AUC: 0.857619,  PR_AUC: 0.881964,  PR_AUC0: 0.881814
+matrix:[[1415  367]
+ [ 414 2462]]
+Epoch 144:
+ -----Train Loss: 0.547058
+ Accuracy: 0.722388,  Precision: 0.729738,  Recall: 0.874087,  F1: 0.795417,  AUC: 0.771545,  PR_AUC: 0.832224,  PR_AUC0: 0.832206
+matrix:[[ 3972  4345]
+ [ 1690 11732]]
+-----Val Loss: 0.432774
+ Accuracy: 0.832117,  Precision: 0.869442,  Recall: 0.856745,  F1: 0.863047,  AUC: 0.856593,  PR_AUC: 0.882777,  PR_AUC0: 0.882714
+matrix:[[1412  370]
+ [ 412 2464]]
+Epoch 145:
+ -----Train Loss: 0.545074
+ Accuracy: 0.724090,  Precision: 0.731710,  Recall: 0.873342,  F1: 0.796277,  AUC: 0.773841,  PR_AUC: 0.835567,  PR_AUC0: 0.835552
+matrix:[[ 4019  4298]
+ [ 1700 11722]]
+-----Val Loss: 0.432073
+ Accuracy: 0.832331,  Precision: 0.875045,  Recall: 0.849791,  F1: 0.862233,  AUC: 0.858279,  PR_AUC: 0.885616,  PR_AUC0: 0.885563
+matrix:[[1433  349]
+ [ 432 2444]]
+Epoch 146:
+ -----Train Loss: 0.548545
+ Accuracy: 0.723216,  Precision: 0.723838,  Recall: 0.892043,  F1: 0.799186,  AUC: 0.770534,  PR_AUC: 0.831399,  PR_AUC0: 0.831381
+matrix:[[ 3749  4568]
+ [ 1449 11973]]
+-----Val Loss: 0.435383
+ Accuracy: 0.830399,  Precision: 0.876263,  Recall: 0.844576,  F1: 0.860127,  AUC: 0.856367,  PR_AUC: 0.882570,  PR_AUC0: 0.882462
+matrix:[[1439  343]
+ [ 447 2429]]
+Epoch 147:
+ -----Train Loss: 0.543166
+ Accuracy: 0.725194,  Precision: 0.726383,  Recall: 0.890255,  F1: 0.800013,  AUC: 0.774840,  PR_AUC: 0.836277,  PR_AUC0: 0.836264
+matrix:[[ 3816  4501]
+ [ 1473 11949]]
+-----Val Loss: 0.432956
+ Accuracy: 0.833834,  Precision: 0.871904,  Recall: 0.856745,  F1: 0.864258,  AUC: 0.856430,  PR_AUC: 0.881910,  PR_AUC0: 0.881842
+matrix:[[1420  362]
+ [ 412 2464]]
+Epoch 148:
+ -----Train Loss: 0.542186
+ Accuracy: 0.726298,  Precision: 0.731503,  Recall: 0.879526,  F1: 0.798714,  AUC: 0.777195,  PR_AUC: 0.839405,  PR_AUC0: 0.839392
+matrix:[[ 3984  4333]
+ [ 1617 11805]]
+-----Val Loss: 0.433171
+ Accuracy: 0.832976,  Precision: 0.869106,  Recall: 0.858832,  F1: 0.863938,  AUC: 0.859064,  PR_AUC: 0.882870,  PR_AUC0: 0.882767
+matrix:[[1410  372]
+ [ 406 2470]]
+Epoch 149:
+ -----Train Loss: 0.541710
+ Accuracy: 0.729058,  Precision: 0.729943,  Recall: 0.890702,  F1: 0.802349,  AUC: 0.778209,  PR_AUC: 0.837473,  PR_AUC0: 0.837439
+matrix:[[ 3894  4423]
+ [ 1467 11955]]
+-----Val Loss: 0.433583
+ Accuracy: 0.831473,  Precision: 0.875135,  Recall: 0.848053,  F1: 0.861381,  AUC: 0.857772,  PR_AUC: 0.882480,  PR_AUC0: 0.882355
+matrix:[[1434  348]
+ [ 437 2439]]
+Epoch 150:
+ -----Train Loss: 0.544090
+ Accuracy: 0.726896,  Precision: 0.730067,  Recall: 0.884816,  F1: 0.800027,  AUC: 0.775402,  PR_AUC: 0.834129,  PR_AUC0: 0.834107
+matrix:[[ 3926  4391]
+ [ 1546 11876]]
+-----Val Loss: 0.431478
+ Accuracy: 0.834049,  Precision: 0.873005,  Recall: 0.855702,  F1: 0.864267,  AUC: 0.857805,  PR_AUC: 0.882762,  PR_AUC0: 0.882636
+matrix:[[1424  358]
+ [ 415 2461]]
+Epoch 151:
+ -----Train Loss: 0.541552
+ Accuracy: 0.727034,  Precision: 0.732952,  Recall: 0.877664,  F1: 0.798807,  AUC: 0.777671,  PR_AUC: 0.835767,  PR_AUC0: 0.835742
+matrix:[[ 4025  4292]
+ [ 1642 11780]]
+-----Val Loss: 0.431131
+ Accuracy: 0.834049,  Precision: 0.875402,  Recall: 0.852573,  F1: 0.863837,  AUC: 0.858088,  PR_AUC: 0.881185,  PR_AUC0: 0.880927
+matrix:[[1433  349]
+ [ 424 2452]]
+Epoch 152:
+ -----Train Loss: 0.540756
+ Accuracy: 0.730208,  Precision: 0.735142,  Recall: 0.880122,  F1: 0.801126,  AUC: 0.778617,  PR_AUC: 0.836329,  PR_AUC0: 0.836285
+matrix:[[ 4061  4256]
+ [ 1609 11813]]
+-----Val Loss: 0.430336
+ Accuracy: 0.832976,  Precision: 0.872250,  Recall: 0.854659,  F1: 0.863365,  AUC: 0.858905,  PR_AUC: 0.884512,  PR_AUC0: 0.884424
+matrix:[[1422  360]
+ [ 418 2458]]
+Epoch 153:
+ -----Train Loss: 0.543805
+ Accuracy: 0.726160,  Precision: 0.735214,  Recall: 0.869692,  F1: 0.796819,  AUC: 0.775092,  PR_AUC: 0.835113,  PR_AUC0: 0.835098
+matrix:[[ 4113  4204]
+ [ 1749 11673]]
+-----Val Loss: 0.430857
+ Accuracy: 0.832976,  Precision: 0.873310,  Recall: 0.853268,  F1: 0.863173,  AUC: 0.859398,  PR_AUC: 0.884918,  PR_AUC0: 0.884818
+matrix:[[1426  356]
+ [ 422 2454]]
+Epoch 154:
+ -----Train Loss: 0.541677
+ Accuracy: 0.728322,  Precision: 0.734963,  Recall: 0.875801,  F1: 0.799225,  AUC: 0.778005,  PR_AUC: 0.836672,  PR_AUC0: 0.836612
+matrix:[[ 4078  4239]
+ [ 1667 11755]]
+-----Val Loss: 0.431190
+ Accuracy: 0.832117,  Precision: 0.869442,  Recall: 0.856745,  F1: 0.863047,  AUC: 0.858090,  PR_AUC: 0.883381,  PR_AUC0: 0.883163
+matrix:[[1412  370]
+ [ 412 2464]]
+Epoch 155:
+ -----Train Loss: 0.537024
+ Accuracy: 0.730484,  Precision: 0.738145,  Recall: 0.873268,  F1: 0.800041,  AUC: 0.782208,  PR_AUC: 0.840171,  PR_AUC0: 0.840156
+matrix:[[ 4159  4158]
+ [ 1701 11721]]
+-----Val Loss: 0.430283
+ Accuracy: 0.831902,  Precision: 0.872818,  Recall: 0.851878,  F1: 0.862221,  AUC: 0.859188,  PR_AUC: 0.885680,  PR_AUC0: 0.885607
+matrix:[[1425  357]
+ [ 426 2450]]
+Epoch 156:
+ -----Train Loss: 0.541478
+ Accuracy: 0.729840,  Precision: 0.739514,  Recall: 0.868276,  F1: 0.798739,  AUC: 0.778377,  PR_AUC: 0.836131,  PR_AUC0: 0.836117
+matrix:[[ 4212  4105]
+ [ 1768 11654]]
+-----Val Loss: 0.430332
+ Accuracy: 0.833405,  Precision: 0.873665,  Recall: 0.853616,  F1: 0.863524,  AUC: 0.858996,  PR_AUC: 0.885284,  PR_AUC0: 0.885215
+matrix:[[1427  355]
+ [ 421 2455]]
+Epoch 157:
+ -----Train Loss: 0.541596
+ Accuracy: 0.725884,  Precision: 0.728997,  Recall: 0.885039,  F1: 0.799475,  AUC: 0.777775,  PR_AUC: 0.838506,  PR_AUC0: 0.838489
+matrix:[[ 3901  4416]
+ [ 1543 11879]]
+-----Val Loss: 0.432860
+ Accuracy: 0.832976,  Precision: 0.867297,  Recall: 0.861266,  F1: 0.864271,  AUC: 0.857908,  PR_AUC: 0.886300,  PR_AUC0: 0.886220
+matrix:[[1403  379]
+ [ 399 2477]]
+Epoch 158:
+ -----Train Loss: 0.543637
+ Accuracy: 0.724550,  Precision: 0.729899,  Recall: 0.879228,  F1: 0.797634,  AUC: 0.775506,  PR_AUC: 0.835779,  PR_AUC0: 0.835763
+matrix:[[ 3950  4367]
+ [ 1621 11801]]
+-----Val Loss: 0.432481
+ Accuracy: 0.832761,  Precision: 0.876481,  Recall: 0.848748,  F1: 0.862392,  AUC: 0.856878,  PR_AUC: 0.884382,  PR_AUC0: 0.884255
+matrix:[[1438  344]
+ [ 435 2441]]
+Epoch 159:
+ -----Train Loss: 0.544878
+ Accuracy: 0.724504,  Precision: 0.729825,  Recall: 0.879303,  F1: 0.797621,  AUC: 0.774936,  PR_AUC: 0.836153,  PR_AUC0: 0.836137
+matrix:[[ 3948  4369]
+ [ 1620 11802]]
+-----Val Loss: 0.432675
+ Accuracy: 0.833405,  Precision: 0.867647,  Recall: 0.861613,  F1: 0.864620,  AUC: 0.857225,  PR_AUC: 0.881907,  PR_AUC0: 0.881815
+matrix:[[1404  378]
+ [ 398 2478]]
+Epoch 160:
+ -----Train Loss: 0.541597
+ Accuracy: 0.729518,  Precision: 0.732119,  Recall: 0.886157,  F1: 0.801807,  AUC: 0.778033,  PR_AUC: 0.837411,  PR_AUC0: 0.837395
+matrix:[[ 3965  4352]
+ [ 1528 11894]]
+-----Val Loss: 0.430955
+ Accuracy: 0.834049,  Precision: 0.873269,  Recall: 0.855355,  F1: 0.864219,  AUC: 0.859079,  PR_AUC: 0.887801,  PR_AUC0: 0.887737
+matrix:[[1425  357]
+ [ 416 2460]]
+Epoch 161:
+ -----Train Loss: 0.539498
+ Accuracy: 0.728874,  Precision: 0.734546,  Recall: 0.878260,  F1: 0.800000,  AUC: 0.781329,  PR_AUC: 0.840400,  PR_AUC0: 0.840388
+matrix:[[ 4057  4260]
+ [ 1634 11788]]
+-----Val Loss: 0.430507
+ Accuracy: 0.833405,  Precision: 0.877426,  Recall: 0.848748,  F1: 0.862849,  AUC: 0.859526,  PR_AUC: 0.887544,  PR_AUC0: 0.887483
+matrix:[[1441  341]
+ [ 435 2441]]
+Epoch 162:
+ -----Train Loss: 0.537338
+ Accuracy: 0.729380,  Precision: 0.735667,  Recall: 0.876695,  F1: 0.800014,  AUC: 0.782105,  PR_AUC: 0.841050,  PR_AUC0: 0.841033
+matrix:[[ 4089  4228]
+ [ 1655 11767]]
+-----Val Loss: 0.431374
+ Accuracy: 0.833405,  Precision: 0.870240,  Recall: 0.858136,  F1: 0.864146,  AUC: 0.859030,  PR_AUC: 0.887697,  PR_AUC0: 0.887651
+matrix:[[1414  368]
+ [ 408 2468]]
+Epoch 163:
+ -----Train Loss: 0.541224
+ Accuracy: 0.727264,  Precision: 0.731451,  Recall: 0.882134,  F1: 0.799757,  AUC: 0.778364,  PR_AUC: 0.837863,  PR_AUC0: 0.837849
+matrix:[[ 3970  4347]
+ [ 1582 11840]]
+-----Val Loss: 0.430996
+ Accuracy: 0.832546,  Precision: 0.868495,  Recall: 0.858832,  F1: 0.863636,  AUC: 0.859396,  PR_AUC: 0.887336,  PR_AUC0: 0.887116
+matrix:[[1408  374]
+ [ 406 2470]]
+Epoch 164:
+ -----Train Loss: 0.540650
+ Accuracy: 0.727908,  Precision: 0.730403,  Recall: 0.886530,  F1: 0.800929,  AUC: 0.778747,  PR_AUC: 0.838596,  PR_AUC0: 0.838583
+matrix:[[ 3925  4392]
+ [ 1523 11899]]
+-----Val Loss: 0.431402
+ Accuracy: 0.832976,  Precision: 0.867040,  Recall: 0.861613,  F1: 0.864318,  AUC: 0.858579,  PR_AUC: 0.886529,  PR_AUC0: 0.886450
+matrix:[[1402  380]
+ [ 398 2478]]
+Epoch 165:
+ -----Train Loss: 0.538470
+ Accuracy: 0.732370,  Precision: 0.736502,  Recall: 0.882134,  F1: 0.802766,  AUC: 0.781156,  PR_AUC: 0.838798,  PR_AUC0: 0.838782
+matrix:[[ 4081  4236]
+ [ 1582 11840]]
+-----Val Loss: 0.430256
+ Accuracy: 0.834264,  Precision: 0.870423,  Recall: 0.859527,  F1: 0.864941,  AUC: 0.859336,  PR_AUC: 0.887250,  PR_AUC0: 0.887200
+matrix:[[1414  368]
+ [ 404 2472]]
+Epoch 166:
+ -----Train Loss: 0.536579
+ Accuracy: 0.730254,  Precision: 0.738996,  Recall: 0.870586,  F1: 0.799412,  AUC: 0.783648,  PR_AUC: 0.841928,  PR_AUC0: 0.841913
+matrix:[[ 4190  4127]
+ [ 1737 11685]]
+-----Val Loss: 0.431015
+ Accuracy: 0.834264,  Precision: 0.868605,  Recall: 0.861961,  F1: 0.865271,  AUC: 0.859375,  PR_AUC: 0.886552,  PR_AUC0: 0.886498
+matrix:[[1407  375]
+ [ 397 2479]]
+Epoch 167:
+ -----Train Loss: 0.535833
+ Accuracy: 0.733888,  Precision: 0.741601,  Recall: 0.873268,  F1: 0.802067,  AUC: 0.784482,  PR_AUC: 0.841429,  PR_AUC0: 0.841416
+matrix:[[ 4233  4084]
+ [ 1701 11721]]
+-----Val Loss: 0.429847
+ Accuracy: 0.832546,  Precision: 0.872424,  Recall: 0.853616,  F1: 0.862917,  AUC: 0.859529,  PR_AUC: 0.886437,  PR_AUC0: 0.886365
+matrix:[[1423  359]
+ [ 421 2455]]
+Epoch 168:
+ -----Train Loss: 0.539426
+ Accuracy: 0.728506,  Precision: 0.736211,  Recall: 0.873119,  F1: 0.798841,  AUC: 0.780300,  PR_AUC: 0.839999,  PR_AUC0: 0.839978
+matrix:[[ 4118  4199]
+ [ 1703 11719]]
+-----Val Loss: 0.430955
+ Accuracy: 0.832117,  Precision: 0.870751,  Recall: 0.855007,  F1: 0.862807,  AUC: 0.858476,  PR_AUC: 0.886425,  PR_AUC0: 0.886369
+matrix:[[1417  365]
+ [ 417 2459]]
+Epoch 169:
+ -----Train Loss: 0.543666
+ Accuracy: 0.724320,  Precision: 0.734102,  Recall: 0.867829,  F1: 0.795384,  AUC: 0.775619,  PR_AUC: 0.837418,  PR_AUC0: 0.837405
+matrix:[[ 4098  4219]
+ [ 1774 11648]]
+-----Val Loss: 0.430677
+ Accuracy: 0.834049,  Precision: 0.871161,  Recall: 0.858136,  F1: 0.864600,  AUC: 0.859553,  PR_AUC: 0.887589,  PR_AUC0: 0.887533
+matrix:[[1417  365]
+ [ 408 2468]]
+Epoch 170:
+ -----Train Loss: 0.536897
+ Accuracy: 0.728736,  Precision: 0.734030,  Recall: 0.879228,  F1: 0.800095,  AUC: 0.782131,  PR_AUC: 0.839167,  PR_AUC0: 0.839154
+matrix:[[ 4041  4276]
+ [ 1621 11801]]
+-----Val Loss: 0.430327
+ Accuracy: 0.833834,  Precision: 0.873224,  Recall: 0.855007,  F1: 0.864020,  AUC: 0.858937,  PR_AUC: 0.886406,  PR_AUC0: 0.886344
+matrix:[[1425  357]
+ [ 417 2459]]
+Epoch 171:
+ -----Train Loss: 0.537245
+ Accuracy: 0.730254,  Precision: 0.734779,  Recall: 0.881165,  F1: 0.801342,  AUC: 0.782293,  PR_AUC: 0.842760,  PR_AUC0: 0.842749
+matrix:[[ 4048  4269]
+ [ 1595 11827]]
+-----Val Loss: 0.429896
+ Accuracy: 0.835122,  Precision: 0.876698,  Recall: 0.852921,  F1: 0.864646,  AUC: 0.859048,  PR_AUC: 0.884045,  PR_AUC0: 0.883957
+matrix:[[1437  345]
+ [ 423 2453]]
+Epoch 172:
+ -----Train Loss: 0.542267
+ Accuracy: 0.726528,  Precision: 0.733817,  Recall: 0.874162,  F1: 0.797865,  AUC: 0.779024,  PR_AUC: 0.838071,  PR_AUC0: 0.838057
+matrix:[[ 4061  4256]
+ [ 1689 11733]]
+-----Val Loss: 0.430463
+ Accuracy: 0.834049,  Precision: 0.871686,  Recall: 0.857441,  F1: 0.864505,  AUC: 0.859961,  PR_AUC: 0.886008,  PR_AUC0: 0.885926
+matrix:[[1419  363]
+ [ 410 2466]]
+Epoch 173:
+ -----Train Loss: 0.538832
+ Accuracy: 0.727310,  Precision: 0.737422,  Recall: 0.867084,  F1: 0.797014,  AUC: 0.781843,  PR_AUC: 0.841890,  PR_AUC0: 0.841874
+matrix:[[ 4173  4144]
+ [ 1784 11638]]
+-----Val Loss: 0.429806
+ Accuracy: 0.833834,  Precision: 0.874021,  Recall: 0.853964,  F1: 0.863876,  AUC: 0.859674,  PR_AUC: 0.884029,  PR_AUC0: 0.883787
+matrix:[[1428  354]
+ [ 420 2456]]
+Epoch 174:
+ -----Train Loss: 0.537614
+ Accuracy: 0.728506,  Precision: 0.735294,  Recall: 0.875428,  F1: 0.799265,  AUC: 0.782791,  PR_AUC: 0.843527,  PR_AUC0: 0.843512
+matrix:[[ 4087  4230]
+ [ 1672 11750]]
+-----Val Loss: 0.431101
+ Accuracy: 0.833405,  Precision: 0.867390,  Recall: 0.861961,  F1: 0.864667,  AUC: 0.859651,  PR_AUC: 0.886964,  PR_AUC0: 0.886909
+matrix:[[1403  379]
+ [ 397 2479]]
+Epoch 175:
+ -----Train Loss: 0.540900
+ Accuracy: 0.727678,  Precision: 0.733503,  Recall: 0.877887,  F1: 0.799227,  AUC: 0.779161,  PR_AUC: 0.837430,  PR_AUC0: 0.837406
+matrix:[[ 4036  4281]
+ [ 1639 11783]]
+-----Val Loss: 0.432961
+ Accuracy: 0.831687,  Precision: 0.864460,  Recall: 0.862656,  F1: 0.863557,  AUC: 0.859008,  PR_AUC: 0.885853,  PR_AUC0: 0.885622
+matrix:[[1393  389]
+ [ 395 2481]]
+Epoch 176:
+ -----Train Loss: 0.536873
+ Accuracy: 0.732324,  Precision: 0.734183,  Recall: 0.887945,  F1: 0.803777,  AUC: 0.782534,  PR_AUC: 0.840007,  PR_AUC0: 0.839987
+matrix:[[ 4002  4315]
+ [ 1504 11918]]
+-----Val Loss: 0.430168
+ Accuracy: 0.833834,  Precision: 0.870854,  Recall: 0.858136,  F1: 0.864448,  AUC: 0.859216,  PR_AUC: 0.886400,  PR_AUC0: 0.886348
+matrix:[[1416  366]
+ [ 408 2468]]
+Epoch 177:
+ -----Train Loss: 0.536822
+ Accuracy: 0.729840,  Precision: 0.735862,  Recall: 0.877366,  F1: 0.800408,  AUC: 0.783382,  PR_AUC: 0.842949,  PR_AUC0: 0.842935
+matrix:[[ 4090  4227]
+ [ 1646 11776]]
+-----Val Loss: 0.430306
+ Accuracy: 0.832546,  Precision: 0.869535,  Recall: 0.857441,  F1: 0.863445,  AUC: 0.859977,  PR_AUC: 0.887037,  PR_AUC0: 0.886979
+matrix:[[1412  370]
+ [ 410 2466]]
+Epoch 178:
+ -----Train Loss: 0.536591
+ Accuracy: 0.729058,  Precision: 0.734029,  Recall: 0.880048,  F1: 0.800434,  AUC: 0.783778,  PR_AUC: 0.842387,  PR_AUC0: 0.842374
+matrix:[[ 4037  4280]
+ [ 1610 11812]]
+-----Val Loss: 0.430199
+ Accuracy: 0.834908,  Precision: 0.870820,  Recall: 0.860223,  F1: 0.865489,  AUC: 0.859270,  PR_AUC: 0.885964,  PR_AUC0: 0.885897
+matrix:[[1415  367]
+ [ 402 2474]]
+Epoch 179:
+ -----Train Loss: 0.537704
+ Accuracy: 0.728460,  Precision: 0.736283,  Recall: 0.872821,  F1: 0.798759,  AUC: 0.782188,  PR_AUC: 0.842413,  PR_AUC0: 0.842401
+matrix:[[ 4121  4196]
+ [ 1707 11715]]
+-----Val Loss: 0.429504
+ Accuracy: 0.833834,  Precision: 0.870331,  Recall: 0.858832,  F1: 0.864543,  AUC: 0.860194,  PR_AUC: 0.886788,  PR_AUC0: 0.886732
+matrix:[[1414  368]
+ [ 406 2470]]
+Epoch 180:
+ -----Train Loss: 0.535072
+ Accuracy: 0.734808,  Precision: 0.742941,  Recall: 0.872299,  F1: 0.802440,  AUC: 0.785054,  PR_AUC: 0.842352,  PR_AUC0: 0.842296
+matrix:[[ 4266  4051]
+ [ 1714 11708]]
+-----Val Loss: 0.430641
+ Accuracy: 0.833620,  Precision: 0.875045,  Recall: 0.852225,  F1: 0.863484,  AUC: 0.859140,  PR_AUC: 0.886902,  PR_AUC0: 0.886853
+matrix:[[1432  350]
+ [ 425 2451]]
+Epoch 181:
+ -----Train Loss: 0.538141
+ Accuracy: 0.728276,  Precision: 0.737862,  Recall: 0.868425,  F1: 0.797837,  AUC: 0.781404,  PR_AUC: 0.841636,  PR_AUC0: 0.841625
+matrix:[[ 4176  4141]
+ [ 1766 11656]]
+-----Val Loss: 0.429474
+ Accuracy: 0.834478,  Precision: 0.870990,  Recall: 0.859179,  F1: 0.865045,  AUC: 0.859001,  PR_AUC: 0.884895,  PR_AUC0: 0.884844
+matrix:[[1416  366]
+ [ 405 2471]]
+Epoch 182:
+ -----Train Loss: 0.535511
+ Accuracy: 0.729794,  Precision: 0.740046,  Recall: 0.866860,  F1: 0.798449,  AUC: 0.785129,  PR_AUC: 0.845922,  PR_AUC0: 0.845909
+matrix:[[ 4230  4087]
+ [ 1787 11635]]
+-----Val Loss: 0.429528
+ Accuracy: 0.834693,  Precision: 0.875535,  Recall: 0.853616,  F1: 0.864437,  AUC: 0.859340,  PR_AUC: 0.886574,  PR_AUC0: 0.886521
+matrix:[[1433  349]
+ [ 421 2455]]
+Epoch 183:
+ -----Train Loss: 0.540242
+ Accuracy: 0.729058,  Precision: 0.737723,  Recall: 0.870735,  F1: 0.798729,  AUC: 0.779608,  PR_AUC: 0.838029,  PR_AUC0: 0.838013
+matrix:[[ 4162  4155]
+ [ 1735 11687]]
+-----Val Loss: 0.429417
+ Accuracy: 0.834478,  Precision: 0.874955,  Recall: 0.853964,  F1: 0.864332,  AUC: 0.860000,  PR_AUC: 0.887995,  PR_AUC0: 0.887948
+matrix:[[1431  351]
+ [ 420 2456]]
+Epoch 184:
+ -----Train Loss: 0.536882
+ Accuracy: 0.731542,  Precision: 0.735385,  Recall: 0.882879,  F1: 0.802411,  AUC: 0.782607,  PR_AUC: 0.841164,  PR_AUC0: 0.841150
+matrix:[[ 4053  4264]
+ [ 1572 11850]]
+-----Val Loss: 0.429425
+ Accuracy: 0.835337,  Precision: 0.872483,  Recall: 0.858832,  F1: 0.865604,  AUC: 0.858929,  PR_AUC: 0.885058,  PR_AUC0: 0.884985
+matrix:[[1421  361]
+ [ 406 2470]]
+Epoch 185:
+ -----Train Loss: 0.534658
+ Accuracy: 0.732002,  Precision: 0.739621,  Recall: 0.873417,  F1: 0.800970,  AUC: 0.785400,  PR_AUC: 0.843136,  PR_AUC0: 0.843124
+matrix:[[ 4190  4127]
+ [ 1699 11723]]
+-----Val Loss: 0.430113
+ Accuracy: 0.833834,  Precision: 0.875357,  Recall: 0.852225,  F1: 0.863636,  AUC: 0.859425,  PR_AUC: 0.886474,  PR_AUC0: 0.886254
+matrix:[[1433  349]
+ [ 425 2451]]
+Epoch 186:
+ -----Train Loss: 0.540026
+ Accuracy: 0.729656,  Precision: 0.738841,  Recall: 0.869468,  F1: 0.798850,  AUC: 0.779503,  PR_AUC: 0.839943,  PR_AUC0: 0.839931
+matrix:[[ 4192  4125]
+ [ 1752 11670]]
+-----Val Loss: 0.429783
+ Accuracy: 0.834264,  Precision: 0.872521,  Recall: 0.856745,  F1: 0.864561,  AUC: 0.859472,  PR_AUC: 0.885329,  PR_AUC0: 0.885188
+matrix:[[1422  360]
+ [ 412 2464]]
+Epoch 187:
+ -----Train Loss: 0.537765
+ Accuracy: 0.727402,  Precision: 0.733870,  Recall: 0.876248,  F1: 0.798764,  AUC: 0.781570,  PR_AUC: 0.842090,  PR_AUC0: 0.842078
+matrix:[[ 4052  4265]
+ [ 1661 11761]]
+-----Val Loss: 0.429125
+ Accuracy: 0.833405,  Precision: 0.872340,  Recall: 0.855355,  F1: 0.863764,  AUC: 0.859558,  PR_AUC: 0.887626,  PR_AUC0: 0.887576
+matrix:[[1422  360]
+ [ 416 2460]]
+Epoch 188:
+ -----Train Loss: 0.534622
+ Accuracy: 0.731726,  Precision: 0.736508,  Recall: 0.880495,  F1: 0.802090,  AUC: 0.786135,  PR_AUC: 0.844310,  PR_AUC0: 0.844296
+matrix:[[ 4089  4228]
+ [ 1604 11818]]
+-----Val Loss: 0.430163
+ Accuracy: 0.834478,  Precision: 0.870990,  Recall: 0.859179,  F1: 0.865045,  AUC: 0.858721,  PR_AUC: 0.886592,  PR_AUC0: 0.886547
+matrix:[[1416  366]
+ [ 405 2471]]
+Epoch 189:
+ -----Train Loss: 0.538982
+ Accuracy: 0.729242,  Precision: 0.734562,  Recall: 0.879154,  F1: 0.800380,  AUC: 0.780878,  PR_AUC: 0.842257,  PR_AUC0: 0.842245
+matrix:[[ 4053  4264]
+ [ 1622 11800]]
+-----Val Loss: 0.428979
+ Accuracy: 0.834478,  Precision: 0.872040,  Recall: 0.857789,  F1: 0.864855,  AUC: 0.859548,  PR_AUC: 0.887000,  PR_AUC0: 0.886939
+matrix:[[1420  362]
+ [ 409 2467]]
+Epoch 190:
+ -----Train Loss: 0.537905
+ Accuracy: 0.726436,  Precision: 0.737166,  Recall: 0.865519,  F1: 0.796203,  AUC: 0.782079,  PR_AUC: 0.842738,  PR_AUC0: 0.842718
+matrix:[[ 4175  4142]
+ [ 1805 11617]]
+-----Val Loss: 0.430372
+ Accuracy: 0.834049,  Precision: 0.869856,  Recall: 0.859875,  F1: 0.864837,  AUC: 0.858964,  PR_AUC: 0.885737,  PR_AUC0: 0.885679
+matrix:[[1412  370]
+ [ 403 2473]]
+Epoch 191:
+ -----Train Loss: 0.541436
+ Accuracy: 0.725470,  Precision: 0.734580,  Recall: 0.869543,  F1: 0.796383,  AUC: 0.778423,  PR_AUC: 0.838602,  PR_AUC0: 0.838589
+matrix:[[ 4100  4217]
+ [ 1751 11671]]
+-----Val Loss: 0.430290
+ Accuracy: 0.833620,  Precision: 0.869504,  Recall: 0.859527,  F1: 0.864487,  AUC: 0.859469,  PR_AUC: 0.884979,  PR_AUC0: 0.884879
+matrix:[[1411  371]
+ [ 404 2472]]
+Epoch 192:
+ -----Train Loss: 0.536681
+ Accuracy: 0.730254,  Precision: 0.739511,  Recall: 0.869319,  F1: 0.799178,  AUC: 0.783528,  PR_AUC: 0.843438,  PR_AUC0: 0.843419
+matrix:[[ 4207  4110]
+ [ 1754 11668]]
+-----Val Loss: 0.429788
+ Accuracy: 0.834264,  Precision: 0.870945,  Recall: 0.858832,  F1: 0.864846,  AUC: 0.859084,  PR_AUC: 0.885873,  PR_AUC0: 0.885811
+matrix:[[1416  366]
+ [ 406 2470]]
+Epoch 193:
+ -----Train Loss: 0.534535
+ Accuracy: 0.731220,  Precision: 0.738288,  Recall: 0.874758,  F1: 0.800750,  AUC: 0.786081,  PR_AUC: 0.843750,  PR_AUC0: 0.843727
+matrix:[[ 4155  4162]
+ [ 1681 11741]]
+-----Val Loss: 0.430481
+ Accuracy: 0.832761,  Precision: 0.867508,  Recall: 0.860570,  F1: 0.864025,  AUC: 0.859248,  PR_AUC: 0.884831,  PR_AUC0: 0.884745
+matrix:[[1404  378]
+ [ 401 2475]]
+Epoch 194:
+ -----Train Loss: 0.537743
+ Accuracy: 0.730162,  Precision: 0.738751,  Recall: 0.870958,  F1: 0.799426,  AUC: 0.782138,  PR_AUC: 0.842574,  PR_AUC0: 0.842562
+matrix:[[ 4183  4134]
+ [ 1732 11690]]
+-----Val Loss: 0.430374
+ Accuracy: 0.834693,  Precision: 0.872348,  Recall: 0.857789,  F1: 0.865007,  AUC: 0.859302,  PR_AUC: 0.887500,  PR_AUC0: 0.887452
+matrix:[[1421  361]
+ [ 409 2467]]
+Epoch 195:
+ -----Train Loss: 0.540198
+ Accuracy: 0.727816,  Precision: 0.730852,  Recall: 0.885114,  F1: 0.800620,  AUC: 0.778751,  PR_AUC: 0.838840,  PR_AUC0: 0.838788
+matrix:[[ 3942  4375]
+ [ 1542 11880]]
+-----Val Loss: 0.429828
+ Accuracy: 0.834264,  Precision: 0.871994,  Recall: 0.857441,  F1: 0.864656,  AUC: 0.859208,  PR_AUC: 0.886092,  PR_AUC0: 0.886024
+matrix:[[1420  362]
+ [ 410 2466]]
+Epoch 196:
+ -----Train Loss: 0.537842
+ Accuracy: 0.728690,  Precision: 0.733984,  Recall: 0.879228,  F1: 0.800068,  AUC: 0.781925,  PR_AUC: 0.840708,  PR_AUC0: 0.840693
+matrix:[[ 4040  4277]
+ [ 1621 11801]]
+-----Val Loss: 0.429899
+ Accuracy: 0.835552,  Precision: 0.873055,  Recall: 0.858484,  F1: 0.865708,  AUC: 0.859494,  PR_AUC: 0.885092,  PR_AUC0: 0.884861
+matrix:[[1423  359]
+ [ 407 2469]]
+Epoch 197:
+ -----Train Loss: 0.533694
+ Accuracy: 0.730668,  Precision: 0.734345,  Recall: 0.883326,  F1: 0.801975,  AUC: 0.786685,  PR_AUC: 0.845229,  PR_AUC0: 0.845215
+matrix:[[ 4028  4289]
+ [ 1566 11856]]
+-----Val Loss: 0.429991
+ Accuracy: 0.834478,  Precision: 0.872303,  Recall: 0.857441,  F1: 0.864808,  AUC: 0.859738,  PR_AUC: 0.887512,  PR_AUC0: 0.887464
+matrix:[[1421  361]
+ [ 410 2466]]
+Epoch 198:
+ -----Train Loss: 0.536468
+ Accuracy: 0.729794,  Precision: 0.735052,  Recall: 0.879303,  F1: 0.800733,  AUC: 0.783462,  PR_AUC: 0.842616,  PR_AUC0: 0.842565
+matrix:[[ 4063  4254]
+ [ 1620 11802]]
+-----Val Loss: 0.429752
+ Accuracy: 0.832546,  Precision: 0.874019,  Recall: 0.851530,  F1: 0.862628,  AUC: 0.859370,  PR_AUC: 0.886152,  PR_AUC0: 0.886096
+matrix:[[1429  353]
+ [ 427 2449]]
+Epoch 199:
+ -----Train Loss: 0.539426
+ Accuracy: 0.725746,  Precision: 0.731017,  Recall: 0.879377,  F1: 0.798363,  AUC: 0.780270,  PR_AUC: 0.841558,  PR_AUC0: 0.841545
+matrix:[[ 3974  4343]
+ [ 1619 11803]]
+-----Val Loss: 0.429685
+ Accuracy: 0.834478,  Precision: 0.872566,  Recall: 0.857093,  F1: 0.864761,  AUC: 0.860043,  PR_AUC: 0.888084,  PR_AUC0: 0.888028
+matrix:[[1422  360]
+ [ 411 2465]]
